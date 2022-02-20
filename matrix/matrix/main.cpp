@@ -20,6 +20,7 @@ class Matrix{
     
         Matrix(int _rows, int _cols);
         Matrix(const Matrix &other);
+//        ~Matrix();
 
     
         void pushData();
@@ -41,13 +42,7 @@ class Matrix{
 Matrix::Matrix(int _rows, int _cols){
     this->_rows = _rows;
     this->_cols = _cols;
-    for(auto i = 0; i < _rows; i++){
-        vector<unsigned int> row;
-        for(auto j = 0; j < _cols; j++){
-            row.push_back(1);
-        }
-        _matrix.push_back(row);
-    }
+    pushData();
 }
 
 Matrix::Matrix(const Matrix& other){
@@ -55,14 +50,23 @@ Matrix::Matrix(const Matrix& other){
     this->_cols = other._cols;
     this->_matrix = other._matrix;
 }
+//Matrix::~Matrix(){
+//    for (int i = 0; i < _rows; ++i) {
+//        delete[] _matrix[i];
+//    }
+//    delete[] _matrix;
+//}
 
 void Matrix::pushData(){
     cout << "Enter values: " << endl;
     for(auto i = 0; i < _rows; i++){
         vector<unsigned int> row;
         for(auto j = 0; j < _cols; j++){
-            cin >> _matrix[i][j];
+            int temp;
+            cin >> temp;
+            row.push_back(temp);
         }
+        _matrix.push_back(row);
     }
 }
 
@@ -130,7 +134,6 @@ istream & operator >> (istream &in,  Matrix &matrix){
 
 int main() {
     Matrix matrix(3, 3);
-    matrix.pushData();
     cout << endl;
     matrix.getData();
     cout << endl;
@@ -138,10 +141,9 @@ int main() {
     cout << endl;
     matrix.getElement(3);
     Matrix mat = matrix;
-    Matrix m(3, 3);
     cout << "Entering matrix with cin >>:\n";
-    cin >> m;
+    cin >> mat;
     cout << "Printing matrix with cout <<:\n";
-    cout << m;
+    cout << mat;
     return 0;
 }
