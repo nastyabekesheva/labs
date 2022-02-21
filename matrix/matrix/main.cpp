@@ -20,21 +20,33 @@ class Matrix{
     
         Matrix(int _rows, int _cols);
         Matrix(const Matrix &other);
-//        ~Matrix();
+        ~Matrix() = default;
 
     
-        void pushData();
+        virtual void pushData();
         void getData();
         void getSize();
         void getElement(unsigned int value);
-        int getItem(int i, int j);
-        void setItem(int i, int j, unsigned int value);
     
         Matrix& operator=(const Matrix &other);
         vector<unsigned int>& operator [](unsigned i);
     
         friend ostream & operator << (ostream &out, const Matrix &matrix);
         friend istream & operator >> (istream &in,  Matrix &matrix);
+    
+    
+};
+
+class NegMatrix: public Matrix{
+    
+    public:
+    
+        NegMatrix(int _rows, int _cols): Matrix(_rows, _cols){
+            this->_rows = _rows;
+            this->_cols = _cols;
+        };
+        int accessItem(int i, int j);
+
     
     
 };
@@ -50,12 +62,6 @@ Matrix::Matrix(const Matrix& other){
     this->_cols = other._cols;
     this->_matrix = other._matrix;
 }
-//Matrix::~Matrix(){
-//    for (int i = 0; i < _rows; ++i) {
-//        delete[] _matrix[i];
-//    }
-//    delete[] _matrix;
-//}
 
 void Matrix::pushData(){
     cout << "Enter values: " << endl;
@@ -132,6 +138,16 @@ istream & operator >> (istream &in,  Matrix &matrix){
     return in;
 }
 
+int NegMatrix::accessItem(int i, int j){
+    if (abs(i) <= _rows && abs(j) <= _cols){
+        return _matrix[_rows + i][_cols + j];
+    }
+    else{
+        cout << "Incorrect index set";
+        return 0;
+    }
+}
+
 int main() {
     Matrix matrix(3, 3);
     cout << endl;
@@ -140,10 +156,13 @@ int main() {
     matrix.getSize();
     cout << endl;
     matrix.getElement(3);
-    Matrix mat = matrix;
-    cout << "Entering matrix with cin >>:\n";
+    cout << endl;
+    NegMatrix mat(3, 3);
+    int value = mat.accessItem(-1, -2);
+    cout << value << endl;
+    cout << "Setting data with cin >>" << endl;
     cin >> mat;
-    cout << "Printing matrix with cout <<:\n";
+    cout << "Getting data with cout <<" << endl;
     cout << mat;
     return 0;
 }
