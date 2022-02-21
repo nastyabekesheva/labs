@@ -33,22 +33,16 @@ class Matrix{
     
         friend ostream & operator << (ostream &out, const Matrix &matrix);
         friend istream & operator >> (istream &in,  Matrix &matrix);
-    
-    
+        
 };
 
 class NegMatrix: public Matrix{
     
     public:
     
-        NegMatrix(int _rows, int _cols): Matrix(_rows, _cols){
-            this->_rows = _rows;
-            this->_cols = _cols;
-        };
+        NegMatrix(int _rows, int _cols): Matrix(_rows, _cols){};
         int accessItem(int i, int j);
 
-    
-    
 };
 
 Matrix::Matrix(int _rows, int _cols){
@@ -57,11 +51,6 @@ Matrix::Matrix(int _rows, int _cols){
     pushData();
 }
 
-Matrix::Matrix(const Matrix& other){
-    this->_rows = other._rows;
-    this->_cols = other._cols;
-    this->_matrix = other._matrix;
-}
 
 void Matrix::pushData(){
     cout << "Enter values: " << endl;

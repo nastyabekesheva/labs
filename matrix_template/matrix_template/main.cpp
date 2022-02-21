@@ -40,12 +40,25 @@ class Matrix{
         T& operator()(const unsigned int& i, const unsigned int& j);
         const T& operator()(const unsigned int& i, const unsigned int& j) const;
     
+        Matrix<T> operator+(const T& value);
+        Matrix<T> operator-(const T& value);
+        Matrix<T> operator*(const T& value);
+        Matrix<T> operator/(const T& value);
+    
         template<typename U>
         friend ostream & operator << (ostream &out, const Matrix<U> &matrix);
         template<typename U>
         friend istream & operator >> (istream &in,  Matrix<T> &matrix);
     
+};
+template<typename T>
+class NegMatrix: public Matrix<T>{
     
+    public:
+    
+        NegMatrix(int _rows, int _cols): Matrix<T>(_rows, _cols){ };
+        int accessItem(int i, int j);
+
 };
 
 template<typename T>
@@ -199,6 +212,50 @@ Matrix<T> Matrix<T>::operator*(const Matrix<T> & other){
 }
 
 template<typename T>
+Matrix<T> Matrix<T>::operator+(const T& value){
+    Matrix<T> result(_rows, _cols);
+    for(int i = 0; i < _rows; i++){
+        for(int j = 0; j < _cols; j++){
+            result(i, j) = _matrix[i][j] + value;
+        }
+    }
+    return result;
+}
+
+template<typename T>
+Matrix<T> Matrix<T>::operator-(const T& value){
+    Matrix<T> result(_rows, _cols);
+    for(int i = 0; i < _rows; i++){
+        for(int j = 0; j < _cols; j++){
+            result(i, j) = _matrix[i][j] - value;
+        }
+    }
+    return result;
+}
+
+template<typename T>
+Matrix<T> Matrix<T>::operator*(const T& value){
+    Matrix<T> result(_rows, _cols);
+    for(int i = 0; i < _rows; i++){
+        for(int j = 0; j < _cols; j++){
+            result(i, j) = _matrix[i][j] * value;
+        }
+    }
+    return result;
+}
+
+template<typename T>
+Matrix<T> Matrix<T>::operator/(const T& value){
+    Matrix<T> result(_rows, _cols);
+    for(int i = 0; i < _rows; i++){
+        for(int j = 0; j < _cols; j++){
+            result(i, j) = _matrix[i][j] / value;
+        }
+    }
+    return result;
+}
+
+template<typename T>
 ostream & operator << (ostream &out, const Matrix<T> &matrix){
     for(auto i = 0; i < matrix._rows; i++){
         for(auto j = 0; j < matrix._cols; j++){
@@ -219,6 +276,19 @@ istream & operator >> (istream &in,  Matrix<T> &matrix){
     return in;
 }
 
+template<typename T>
+int NegMatrix<T>::accessItem(int i, int j){
+    if (abs(i) <= this->_rows && abs(j) <= this->_cols){
+        return this->_matrix[this->_rows + i][this->_cols + j];
+    }
+    else{
+        cout << "Incorrect index set";
+        return 0;
+    }
+}
+
+
+
 int main() {
     
     Matrix<int> matrix(3, 3);
@@ -235,6 +305,10 @@ int main() {
     mat.pushData();
     cout << "Adding two matrices" << endl << mat + matrix << endl;
     cout << "Substracting two matrices" << endl << mat - matrix << endl;
-    cout << "Multiplying two matrices" << endl << mat*matrix << endl;
+    cout << "Multiplying two matrices" << endl << mat * matrix << endl;
+    cout << "Adding value to matrix" << endl << mat + 2 << endl;
+    cout << "Substracting value from matrix" << endl << mat - 2 << endl;
+    cout << "Multiplying matrix by value" << endl << mat * 2 << endl;
+    cout << "Dividing matrix by value" << endl << mat / 2 << endl;
     return 0;
 }
