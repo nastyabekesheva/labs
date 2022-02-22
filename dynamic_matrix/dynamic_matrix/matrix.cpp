@@ -26,17 +26,20 @@ Matrix<T>::Matrix(int _rows, int _cols){
 
     for(int i = 0; i < _rows; i++){
         for(int j = 0; j < _cols; j++){
-            _matrix[i][j] = NULL;
+            _matrix[i][j] = 0;
         }        
     }
 }
 
 template<typename T>
 Matrix<T>::~Matrix<T>(){
-    for(int i = 0; i < _rows; i++){
-//        delete[] _matrix[i];
+    if(_matrix){
+        for(int i = 0; i < _rows; i++){
+            delete[] _matrix[i];
+
+        }
+        delete[] _matrix;
     }
-//    delete[] _matrix;
     cout << "Object has been deleted" << endl;
 }
 
@@ -45,6 +48,14 @@ Matrix<T>::Matrix(const Matrix<T>& other){
     this->_rows = other._rows;
     this->_cols = other._cols;
     this->_matrix = other._matrix;
+    
+    _matrix = new T*[_rows];
+    for(int i = 0; i < _rows; i++){
+        _matrix[i] = new T[_cols];
+        for(int j = 0; j < _cols; j++){
+            _matrix[i][j] = other(i, j);
+        }
+    }
 }
 
 template<typename T>
@@ -83,7 +94,7 @@ template<typename T>
 ostream & operator << (ostream &out, const Matrix<T> &matrix){
     for(auto i = 0; i < matrix._rows; i++){
         for(auto j = 0; j < matrix._cols; j++){
-            out << matrix(i, j) << " ";
+            out << matrix._matrix[i][j] << " ";
         }
         out << endl;
     }
@@ -102,21 +113,39 @@ istream & operator >> (istream &in,  Matrix<T> &matrix){
 
 template<typename T>
 T& Matrix<T>::operator()(const unsigned int& i, const unsigned int& j) {
-    return this->_matrix[i][j];
+    return _matrix[i][j];
 }
 
 template<typename T>
 const T& Matrix<T>::operator()(const unsigned int& i, const unsigned int& j) const {
-    return this->_matrix[i][j];
+    return _matrix[i][j];
+}
+template<typename T>
+T& Matrix<T>::operator [](unsigned i){
+    return _matrix[i];
 }
 
 template<typename T>
 Matrix<T>& Matrix<T>::operator=(const Matrix<T> & other){
     
-    this->_rows = other._rows;
-    this->_cols = other._cols;
-    this->_matrix = other._matrix;
-        
+    if(this == &other){
+            return *this;
+        }
+    else{
+        if(_rows != other._rows || _cols != other._cols){
+            this->~Matrix(); _rows = other._rows; _cols = other._cols;
+            _matrix = new T* [ _rows ];
+                
+            for (int i = 0; i < _rows; i++){
+                _matrix[i] = new T[ _cols ];
+            }
+        }
+    }
+    for(int i = 0; i < _rows; i++){
+        for(int j = 0; j < _cols; j++){
+            _matrix[i][j] = other._matrix[i][j];
+        }
+    }
     return *this;
 }
 

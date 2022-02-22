@@ -31,7 +31,7 @@ class Matrix{
 //        Copy constructor
         Matrix(const Matrix<T> &other);
 //        Destructor
-        ~Matrix();
+        virtual ~Matrix();
     
 //        Custom methods
         const int row();
@@ -48,6 +48,7 @@ class Matrix{
 //        Operator overloading for access
         T& operator()(const unsigned int& i, const unsigned int& j);
         const T& operator()(const unsigned int& i, const unsigned int& j) const;
+        T& operator [](unsigned i);
     
 //        Operator overloading methods for two matricies
         Matrix<T> operator+(const Matrix<T>& other);

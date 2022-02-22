@@ -20,7 +20,8 @@ int main() {
     matrix.getElement(3);
     cout << endl;
     Matrix<int> mat(matrix);
-    cout << "Adding two matrices" << endl << mat + matrix << endl;
+    Matrix<int> n = mat + matrix;
+    cout << "Adding two matrices" << endl <<  n << endl;
     cout << "Substracting two matrices" << endl << mat - matrix << endl;
     cout << "Multiplying two matrices" << endl << mat * matrix << endl;
     cout << "Adding value to matrix" << endl << matrix + 2 << endl;
