@@ -31,7 +31,7 @@ ostream & operator << (ostream &out, Complex &complex){
 
 istream & operator >> (istream &in,  Complex &complex){
     
-    cout << "Enter real and imaginary part: " << endl;
+    cout << "Enter real and imaginary part:" << endl;
     
     in >> complex._real >> complex._imag;
     

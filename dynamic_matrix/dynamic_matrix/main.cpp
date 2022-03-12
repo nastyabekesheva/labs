@@ -34,19 +34,10 @@ int main() {
     cout << "Accessing element by negative index" << endl;
     cout << m.accessItem(-1, -1) << endl;
 
-    Complex c0(1, 2);
-    Complex c1(1, 1);
-    Complex c2(1, 5);
-    Complex c3(3, 5);
     
     Matrix<Complex> comp(2, 2);
-    comp(0, 0) = c0;
-    comp(0, 1) = c1;
-    comp(1, 0) = c2;
-    comp(1, 1) = c3;
-
+    cin >> comp;
     cout << comp;
-    
     
     return 0;
 }

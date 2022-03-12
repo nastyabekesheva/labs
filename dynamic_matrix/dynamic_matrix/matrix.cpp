@@ -190,12 +190,17 @@ template<typename T>
 Matrix<T> Matrix<T>::operator*(const Matrix<T> & other){
     
     Matrix<T> result(_rows, _cols);
+    for(auto i = 0; i < _rows; i++){
+        for(auto j = 0; j < _cols; j++){
+
+            result(i, j) = 0;
+        }
+    }
     if(this->_rows == other._rows && this->_cols == other._cols){
         for(auto i = 0; i < _rows; i++){
             for(auto j = 0; j < _cols; j++){
                 for(auto k = 0; k < _cols; k++){
                     result(i, j) = result(i, j) + _matrix[i][k] * other(k, j);
-                    cout << result(k, j) << endl;
                 }
             }
         }

@@ -64,6 +64,7 @@ class Matrix{
         
 };
 
+//        Child Class
 template<typename T>
 class NegMatrix: public Matrix<T>{
     

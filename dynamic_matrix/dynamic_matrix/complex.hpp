@@ -27,8 +27,6 @@ class Complex{
     
         const int real();
         const int imag();
-    
-//        Complex& operator=(const Complex& other);
         
 };
 
