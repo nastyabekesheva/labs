@@ -8,6 +8,8 @@
 #include <iostream>
 #include "matrix.hpp"
 #include "matrix.cpp"
+#include "complex.hpp"
+#include "complex.cpp"
 
 int main() {
     Matrix<int> matrix(3, 3);
@@ -28,10 +30,23 @@ int main() {
     cout << "Substracting value from matrix" << endl << matrix - 2 << endl;
     cout << "Multiplying matrix by value" << endl << matrix * 2 << endl;
     cout << "Dividing matrix by value" << endl << matrix / 2 << endl;
-    NegMatrix<int> m(3, 3);
-    cout << "Enter value:" << endl;
-    cin >> m;
+    NegMatrix<int> m(mat);
     cout << "Accessing element by negative index" << endl;
     cout << m.accessItem(-1, -1) << endl;
+
+    Complex c0(1, 2);
+    Complex c1(1, 1);
+    Complex c2(1, 5);
+    Complex c3(3, 5);
+    
+    Matrix<Complex> comp(2, 2);
+    comp(0, 0) = c0;
+    comp(0, 1) = c1;
+    comp(1, 0) = c2;
+    comp(1, 1) = c3;
+
+    cout << comp;
+    
+    
     return 0;
 }

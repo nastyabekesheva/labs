@@ -9,7 +9,7 @@
 #define matrix_hpp
 
 #include <stdio.h>
-#include <vector>
+#include "complex.hpp"
 using namespace std;
 
 //        Parent class
@@ -57,10 +57,10 @@ class Matrix{
         Matrix<T>& operator=(const Matrix<T>& other);
     
 //        Operator overloading for matrix and scalar value
-            Matrix<T> operator+(const T& value);
-            Matrix<T> operator-(const T& value);
-            Matrix<T> operator*(const T& value);
-            Matrix<T> operator/(const T& value);
+        Matrix<T> operator+(const T& value);
+        Matrix<T> operator-(const T& value);
+        Matrix<T> operator*(const T& value);
+        Matrix<T> operator/(const T& value);
         
 };
 
@@ -74,11 +74,7 @@ class NegMatrix: public Matrix<T>{
 //        Parameter constructor
         NegMatrix(int _rows, int _cols): Matrix<T>(_rows, _cols){ };
 //        Copy constructor
-        NegMatrix(const Matrix<T> &other): Matrix<T>(other){
-            this->_rows = other._rows;
-            this->_cols = other._cols;
-            this->_matrix = other._matrix;
-        };
+        NegMatrix(const Matrix<T> &other): Matrix<T>(other){ };
 //        Destructor
         ~NegMatrix(){};
     

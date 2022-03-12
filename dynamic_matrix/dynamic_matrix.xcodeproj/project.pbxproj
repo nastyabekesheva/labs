@@ -8,6 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		064734DB27C45BD40015C41F /* main.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 064734DA27C45BD40015C41F /* main.cpp */; };
+		064734E327C45BEC0015C41F /* matrix.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 064734E127C45BEC0015C41F /* matrix.cpp */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXCopyFilesBuildPhase section */
@@ -25,6 +26,10 @@
 /* Begin PBXFileReference section */
 		064734D727C45BD40015C41F /* dynamic_matrix */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = dynamic_matrix; sourceTree = BUILT_PRODUCTS_DIR; };
 		064734DA27C45BD40015C41F /* main.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = main.cpp; sourceTree = "<group>"; };
+		064734E127C45BEC0015C41F /* matrix.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = matrix.cpp; sourceTree = "<group>"; };
+		064734E227C45BEC0015C41F /* matrix.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = matrix.hpp; sourceTree = "<group>"; };
+		0661837A27C9532B007A89D9 /* complex.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = complex.cpp; sourceTree = "<group>"; };
+		0661837B27C9532B007A89D9 /* complex.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = complex.hpp; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -58,6 +63,10 @@
 			isa = PBXGroup;
 			children = (
 				064734DA27C45BD40015C41F /* main.cpp */,
+				064734E127C45BEC0015C41F /* matrix.cpp */,
+				064734E227C45BEC0015C41F /* matrix.hpp */,
+				0661837A27C9532B007A89D9 /* complex.cpp */,
+				0661837B27C9532B007A89D9 /* complex.hpp */,
 			);
 			path = dynamic_matrix;
 			sourceTree = "<group>";
@@ -119,6 +128,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				064734E327C45BEC0015C41F /* matrix.cpp in Sources */,
 				064734DB27C45BD40015C41F /* main.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

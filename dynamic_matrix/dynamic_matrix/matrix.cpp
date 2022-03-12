@@ -6,7 +6,6 @@
 //
 
 #include <iostream>
-#include <vector>
 #include "matrix.hpp"
 using namespace std;
 
@@ -23,10 +22,10 @@ Matrix<T>::Matrix(int _rows, int _cols){
         _matrix[i] = new T[_cols];
         
     }
-
+    T temp;
     for(int i = 0; i < _rows; i++){
         for(int j = 0; j < _cols; j++){
-            _matrix[i][j] = 0;
+            _matrix[i][j] = temp;
         }        
     }
 }
@@ -47,7 +46,6 @@ template<typename T>
 Matrix<T>::Matrix(const Matrix<T>& other){
     this->_rows = other._rows;
     this->_cols = other._cols;
-    this->_matrix = other._matrix;
     
     _matrix = new T*[_rows];
     for(int i = 0; i < _rows; i++){
@@ -197,6 +195,7 @@ Matrix<T> Matrix<T>::operator*(const Matrix<T> & other){
             for(auto j = 0; j < _cols; j++){
                 for(auto k = 0; k < _cols; k++){
                     result(i, j) = result(i, j) + _matrix[i][k] * other(k, j);
+                    cout << result(k, j) << endl;
                 }
             }
         }
