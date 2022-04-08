@@ -108,11 +108,11 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" usesAttributedText="YES" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="IZp-7q-A6U">
-                                <rect key="frame" x="83" y="188" width="248" height="31.5"/>
+                                <rect key="frame" x="83" y="188" width="248" height="33"/>
                                 <attributedString key="attributedText">
                                     <fragment content="sin(x)">
                                         <attributes>
-                                            <font key="NSFont" size="24" name=".SFNS-Light"/>
+                                            <font key="NSFont" metaFont="system" size="24"/>
                                             <paragraphStyle key="NSParagraphStyle" alignment="center" lineBreakMode="wordWrapping" baseWritingDirection="natural" tighteningFactorForTruncation="0.0"/>
                                         </attributes>
                                     </fragment>
@@ -124,7 +124,7 @@
                                     </fragment>
                                     <fragment content="=">
                                         <attributes>
-                                            <font key="NSFont" size="24" name=".SFNS-Light"/>
+                                            <font key="NSFont" metaFont="system" size="24"/>
                                             <paragraphStyle key="NSParagraphStyle" alignment="center" lineBreakMode="wordWrapping" baseWritingDirection="natural" tighteningFactorForTruncation="0.0"/>
                                         </attributes>
                                     </fragment>
@@ -138,7 +138,7 @@
                                 <nil key="highlightedColor"/>
                             </label>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" usesAttributedText="YES" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="1r4-Xy-ClA">
-                                <rect key="frame" x="85" y="227" width="32" height="34"/>
+                                <rect key="frame" x="85" y="228.5" width="32" height="34"/>
                                 <attributedString key="attributedText">
                                     <fragment content="x">
                                         <attributes>
@@ -168,7 +168,7 @@
                                 <nil key="highlightedColor"/>
                             </label>
                             <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="agR-Ro-mlb">
-                                <rect key="frame" x="125" y="227" width="205" height="34"/>
+                                <rect key="frame" x="125" y="228.5" width="205" height="34"/>
                                 <constraints>
                                     <constraint firstAttribute="width" constant="205" id="Rz5-4c-mXw"/>
                                 </constraints>
@@ -191,7 +191,7 @@
                                     <fragment content="x in rad = ">
                                         <attributes>
                                             <color key="NSColor" name="textColor" catalog="System" colorSpace="catalog"/>
-                                            <font key="NSFont" size="18" name=".SFNS-Light"/>
+                                            <font key="NSFont" metaFont="system" size="18"/>
                                             <paragraphStyle key="NSParagraphStyle" alignment="center" lineBreakMode="wordWrapping" baseWritingDirection="natural" tighteningFactorForTruncation="0.0"/>
                                         </attributes>
                                     </fragment>
@@ -271,6 +271,7 @@
                     <toolbarItems/>
                     <navigationItem key="navigationItem" id="6s5-E3-NhL"/>
                     <tabBar key="tabBar" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" id="Ouk-Rb-srv">
+                        <rect key="frame" x="0.0" y="0.0" width="1000" height="1000"/>
                         <autoresizingMask key="autoresizingMask"/>
                         <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                     </tabBar>
@@ -295,11 +296,11 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" usesAttributedText="YES" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Hk6-Ps-fvu">
-                                <rect key="frame" x="83" y="188" width="248" height="32"/>
+                                <rect key="frame" x="83" y="188" width="248" height="33"/>
                                 <attributedString key="attributedText">
                                     <fragment content="cos(x)">
                                         <attributes>
-                                            <font key="NSFont" size="24" name=".SFNS-Light"/>
+                                            <font key="NSFont" metaFont="system" size="24"/>
                                             <paragraphStyle key="NSParagraphStyle" alignment="center" lineBreakMode="wordWrapping" baseWritingDirection="natural" tighteningFactorForTruncation="0.0"/>
                                         </attributes>
                                     </fragment>
@@ -311,7 +312,7 @@
                                     </fragment>
                                     <fragment content="=">
                                         <attributes>
-                                            <font key="NSFont" size="24" name=".SFNS-Light"/>
+                                            <font key="NSFont" metaFont="system" size="24"/>
                                             <paragraphStyle key="NSParagraphStyle" alignment="center" lineBreakMode="wordWrapping" baseWritingDirection="natural" tighteningFactorForTruncation="0.0"/>
                                         </attributes>
                                     </fragment>
@@ -325,7 +326,7 @@
                                 <nil key="highlightedColor"/>
                             </label>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" usesAttributedText="YES" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="xrH-ch-Pvt">
-                                <rect key="frame" x="85" y="228" width="32" height="34"/>
+                                <rect key="frame" x="85" y="229" width="32" height="34"/>
                                 <attributedString key="attributedText">
                                     <fragment content="x">
                                         <attributes>
@@ -355,7 +356,7 @@
                                 <nil key="highlightedColor"/>
                             </label>
                             <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="Y0O-C3-Eb9">
-                                <rect key="frame" x="125" y="228" width="205" height="34"/>
+                                <rect key="frame" x="125" y="229" width="205" height="34"/>
                                 <constraints>
                                     <constraint firstAttribute="width" constant="205" id="zWT-5f-JHe"/>
                                 </constraints>
@@ -363,7 +364,7 @@
                                 <textInputTraits key="textInputTraits"/>
                             </textField>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" usesAttributedText="YES" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="tTB-A8-XiB">
-                                <rect key="frame" x="125" y="270" width="205" height="20"/>
+                                <rect key="frame" x="125" y="271" width="205" height="20"/>
                                 <attributedString key="attributedText">
                                     <fragment content="x in rad = ">
                                         <attributes>
@@ -433,11 +434,11 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" usesAttributedText="YES" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="MR4-Tv-ahK">
-                                <rect key="frame" x="83" y="188" width="248" height="32"/>
+                                <rect key="frame" x="83" y="188" width="248" height="33"/>
                                 <attributedString key="attributedText">
                                     <fragment content="tan(x)">
                                         <attributes>
-                                            <font key="NSFont" size="24" name=".SFNS-Light"/>
+                                            <font key="NSFont" metaFont="system" size="24"/>
                                             <paragraphStyle key="NSParagraphStyle" alignment="center" lineBreakMode="wordWrapping" baseWritingDirection="natural" tighteningFactorForTruncation="0.0"/>
                                         </attributes>
                                     </fragment>
@@ -449,7 +450,7 @@
                                     </fragment>
                                     <fragment content="=">
                                         <attributes>
-                                            <font key="NSFont" size="24" name=".SFNS-Light"/>
+                                            <font key="NSFont" metaFont="system" size="24"/>
                                             <paragraphStyle key="NSParagraphStyle" alignment="center" lineBreakMode="wordWrapping" baseWritingDirection="natural" tighteningFactorForTruncation="0.0"/>
                                         </attributes>
                                     </fragment>
@@ -463,7 +464,7 @@
                                 <nil key="highlightedColor"/>
                             </label>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" usesAttributedText="YES" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="OGp-Dw-HQb">
-                                <rect key="frame" x="83" y="227.5" width="32" height="34"/>
+                                <rect key="frame" x="83" y="228.5" width="32" height="34"/>
                                 <attributedString key="attributedText">
                                     <fragment content="x">
                                         <attributes>
@@ -493,7 +494,7 @@
                                 <nil key="highlightedColor"/>
                             </label>
                             <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="pNE-ja-rSX">
-                                <rect key="frame" x="123" y="227.5" width="205" height="34"/>
+                                <rect key="frame" x="123" y="228.5" width="205" height="34"/>
                                 <constraints>
                                     <constraint firstAttribute="width" constant="205" id="RV8-Rn-6Ao"/>
                                 </constraints>
@@ -501,7 +502,7 @@
                                 <textInputTraits key="textInputTraits"/>
                             </textField>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" usesAttributedText="YES" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="rf8-yH-ix9">
-                                <rect key="frame" x="123" y="269" width="205" height="20"/>
+                                <rect key="frame" x="123" y="270" width="205" height="20"/>
                                 <attributedString key="attributedText">
                                     <fragment content="x in rad = ">
                                         <attributes>
@@ -571,11 +572,11 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" usesAttributedText="YES" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="0j8-34-Syx">
-                                <rect key="frame" x="83" y="188" width="248" height="32"/>
+                                <rect key="frame" x="83" y="188" width="248" height="33"/>
                                 <attributedString key="attributedText">
                                     <fragment content="cot(x)">
                                         <attributes>
-                                            <font key="NSFont" size="24" name=".SFNS-Light"/>
+                                            <font key="NSFont" metaFont="system" size="24"/>
                                             <paragraphStyle key="NSParagraphStyle" alignment="center" lineBreakMode="wordWrapping" baseWritingDirection="natural" tighteningFactorForTruncation="0.0"/>
                                         </attributes>
                                     </fragment>
@@ -587,7 +588,7 @@
                                     </fragment>
                                     <fragment content="=">
                                         <attributes>
-                                            <font key="NSFont" size="24" name=".SFNS-Light"/>
+                                            <font key="NSFont" metaFont="system" size="24"/>
                                             <paragraphStyle key="NSParagraphStyle" alignment="center" lineBreakMode="wordWrapping" baseWritingDirection="natural" tighteningFactorForTruncation="0.0"/>
                                         </attributes>
                                     </fragment>
@@ -601,7 +602,7 @@
                                 <nil key="highlightedColor"/>
                             </label>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" usesAttributedText="YES" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="emK-0Z-aUb">
-                                <rect key="frame" x="83" y="227.5" width="32" height="34"/>
+                                <rect key="frame" x="83" y="228.5" width="32" height="34"/>
                                 <attributedString key="attributedText">
                                     <fragment content="x">
                                         <attributes>
@@ -631,7 +632,7 @@
                                 <nil key="highlightedColor"/>
                             </label>
                             <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="4hS-HJ-Rzx">
-                                <rect key="frame" x="123" y="227.5" width="205" height="34"/>
+                                <rect key="frame" x="123" y="228.5" width="205" height="34"/>
                                 <constraints>
                                     <constraint firstAttribute="width" constant="205" id="wB4-pf-0oc"/>
                                 </constraints>
@@ -639,7 +640,7 @@
                                 <textInputTraits key="textInputTraits"/>
                             </textField>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" usesAttributedText="YES" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="zc5-Yg-g0T">
-                                <rect key="frame" x="104.5" y="269" width="205" height="20"/>
+                                <rect key="frame" x="104.5" y="270" width="205" height="20"/>
                                 <attributedString key="attributedText">
                                     <fragment content="x in rad = ">
                                         <attributes>
