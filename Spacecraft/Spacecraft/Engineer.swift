@@ -21,10 +21,6 @@ class Engineer: Personnel{
         proffesion = .scientist
     }
     
-    deinit{
-        self.occupation?.amountOfEngineers -= 1
-    }
-    
     func checkEngine(engine: Engine) -> Bool?{
         switch self.state{
         case .awake:
@@ -43,4 +39,5 @@ class Engineer: Personnel{
     func setEngineState(engine: Engine, state: Engine.State){
         engine.state = state
     }
+    
 }

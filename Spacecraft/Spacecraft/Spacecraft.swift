@@ -109,11 +109,11 @@ class Spacecraft{
                                 panelsState.append(scientist.checkPanels(panel: panel)!)
                             }
                             if panelsState.contains(true){
-                                print("Ready to fly!\nSetting off...\nSuccess, your now flying!")
+                                print("Ready to fly!\nSetting off...\nSuccess, you're now flying!")
                             }
                             else{
                                 print("You should turn your pannels on")
-                                print("Ready to fly!\nSetting off...\nSuccess, your now flying!")
+                                print("Ready to fly!\nSetting off...\nSuccess, you're flying now!")
                             }
                         }
                         else{

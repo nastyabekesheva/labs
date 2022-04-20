@@ -49,10 +49,6 @@ class Personnel{
     }
     
     deinit{
-        print("ok")
-        print(self.occupation)
-        self.occupation?.amountOfScientists -= 1
+        print("Deleteing unnecessary object")
     }
-    
-    
 }

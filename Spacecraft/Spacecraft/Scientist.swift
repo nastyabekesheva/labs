@@ -21,15 +21,6 @@ class Scientist: Personnel{
         proffesion = .scientist
     }
     
-    deinit{
-        print("ok")
-        if (self.occupation?.amountOfScientists) != nil{
-            var temp = Int((self.occupation?.amountOfScientists)!)
-            self.occupation?.amountOfScientists = temp
-            print(self.occupation?.amountOfScientists)
-        }
-    }
-    
     func checkPanels(panel: SolarPanel) -> Bool?{
         
         switch self.state{
@@ -49,4 +40,5 @@ class Scientist: Personnel{
     func setPanelState(panel: SolarPanel, state: SolarPanel.State){
         panel.state = state
     }
+    
 }

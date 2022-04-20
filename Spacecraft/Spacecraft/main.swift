@@ -14,16 +14,13 @@ var person = spacecraft!.addPersonnel("Lily")
 var scientist: Scientist? = Scientist("Tom")
 let panel = SolarPanel("UO83")
 
-
-
 scientist!.setPanelState(panel: panel, state: .on)
 spacecraft!.addPanel(panel: panel)
 spacecraft!.addPersonnel(person: scientist!)
 captain.setEngineState(engine: engine, state: .on)
 
 spacecraft!.startFlight()
-dump(scientist)
-var t = Int((scientist?.occupation!.amountOfScientists)!) - 1
-print(t)
+dump(spacecraft)
+
 
 
