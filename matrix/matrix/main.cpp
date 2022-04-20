@@ -138,6 +138,7 @@ int NegMatrix::accessItem(int i, int j){
 }
 
 int main() {
+    cout << "Hello" << endl;
     Matrix matrix(3, 3);
     cout << endl;
     matrix.getData();
