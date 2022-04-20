@@ -5,6 +5,8 @@
 //  Created by Nastya Bekesheva on 22.02.2022.
 //
 
+/*  Matrix Template Class with dynamic memory for Lab 5  */
+
 #include <iostream>
 #include "matrix.hpp"
 #include "matrix.cpp"
@@ -34,10 +36,15 @@ int main() {
     cout << "Accessing element by negative index" << endl;
     cout << m.accessItem(-1, -1) << endl;
 
-    
+
     Matrix<Complex> comp(2, 2);
     cin >> comp;
     cout << comp;
+    
+    Complex a(1, 20);
+    Complex b(3, 10);
+    
+    a + b;
     
     return 0;
 }

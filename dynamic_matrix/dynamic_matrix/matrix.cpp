@@ -268,5 +268,3 @@ int NegMatrix<T>::accessItem(int i, int j){
     }
 }
 
-
-

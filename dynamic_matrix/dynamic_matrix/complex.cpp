@@ -38,6 +38,39 @@ istream & operator >> (istream &in,  Complex &complex){
     return in;
 }
 
+Complex& Complex::operator+(const Complex& other){
+    Complex result;
+    result._imag = this->_imag + other._imag;
+    result._real = this->_real + other._real;
+    cout << result;
+    return  result;
+}
+
+Complex& Complex::operator-(const Complex& other){
+    Complex result;
+    result._imag = this->_imag - other._imag;
+    result._real = this->_real - other._real;
+    cout << result;
+    return  result;
+    
+}
+
+Complex& Complex::operator*(const Complex& other){
+    Complex result;
+    result._imag = this->_imag * other._imag - this->_real * other._real;
+    result._real = this->_imag * other._real - this->_real * other._imag;
+    cout << result;
+    return  result;
+}
+
+Complex& Complex::operator/(const Complex& other){
+    Complex result;
+    result._imag = (this->_imag * other._imag + this->_real * other._real)/(other._real * other._real + other._imag * other._imag);
+    result._real = (this->_imag * other._real - this->_real * other._imag)/(other._real * other._real + other._imag * other._imag);
+    cout << result;
+    return  result;
+}
+
 const int Complex::real(){
     return this->_real;
 }
