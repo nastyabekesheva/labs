@@ -30,9 +30,4 @@ class HistoryViewController: UIViewController {
         
         historyLabel.text = ""
     }
-    
-    
-
-
-
 }

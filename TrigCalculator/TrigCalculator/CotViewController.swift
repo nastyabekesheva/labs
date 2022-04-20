@@ -20,7 +20,7 @@ class CotViewController: UIViewController {
     
     @IBAction func sliderValueChanged(_ sender: UISlider) {
         let currentValue = Double(sender.value)
-        xText.text = String(format: "%.01f", currentValue)
+        xText.text = String(format: "%.03f", currentValue)
     }
     
     @IBAction func calculateButtonPressed(_ sender: Any) {
@@ -30,8 +30,8 @@ class CotViewController: UIViewController {
             if let xValue = Double(xValue){
                 let radValue = xValue * Double.pi / 180
                 let cotValue = 1/tan(radValue)
-                cotText.text = String(format: "cot(x) = %.01f", cotValue)
-                xInRadText.text = String(format: "x in rad = %.01f", radValue)
+                cotText.text = String(format: "cot(x) = %.03f", cotValue)
+                xInRadText.text = String(format: "x in rad = %.03f", radValue)
                 addToHistory(xValue, cotValue)
             }
             
@@ -42,11 +42,8 @@ class CotViewController: UIViewController {
     }
     
     func addToHistory(_ xValue: Double, _ cotValue: Double){
-        let answer = String(format: "cot(%.01f°) = %.01f", xValue, cotValue)
+        let answer = String(format: "cot(%.03f°) = %.03f", xValue, cotValue)
         HistoryViewController.historyArray.append(answer)
         
     }
-    
-
-
 }

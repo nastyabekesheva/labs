@@ -20,7 +20,7 @@ class TanViewController: UIViewController {
     
     @IBAction func sliderValueChanged(_ sender: UISlider) {
         let currentValue = Double(sender.value)
-        xText.text = String(format: "%.01f", currentValue)
+        xText.text = String(format: "%.03f", currentValue)
     }
     
     @IBAction func calculateButtonPressed(_ sender: Any) {
@@ -30,8 +30,8 @@ class TanViewController: UIViewController {
             if let xValue = Double(xValue){
                 let radValue = xValue * Double.pi / 180
                 let tanValue = tan(radValue)
-                tanText.text = String(format: "tan(x) = %.01f", tanValue)
-                xInRadText.text = String(format: "x in rad = %.01f", radValue)
+                tanText.text = String(format: "tan(x) = %.03f", tanValue)
+                xInRadText.text = String(format: "x in rad = %.03f", radValue)
                 addToHistory(xValue, tanValue)
             }
             
@@ -42,10 +42,8 @@ class TanViewController: UIViewController {
     }
     
     func addToHistory(_ xValue: Double, _ tanValue: Double){
-        let answer = String(format: "tan(%.01f°) = %.01f", xValue, tanValue)
+        let answer = String(format: "tan(%.03f°) = %.03f", xValue, tanValue)
         HistoryViewController.historyArray.append(answer)
         
     }
-
-
 }
