@@ -16,6 +16,7 @@ using namespace std;
 
 int main() {
     
+    cout << "Introduction to Templates" << endl;
     Matrix<int> matrix(3, 3);
     cout << "Enter values:" << endl;
     cin >> matrix;
