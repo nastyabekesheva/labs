@@ -5,6 +5,8 @@
 //  Created by Nastya Bekesheva on 07.04.2022.
 //
 
+/*         Algorithms for course of Discrete Math 2(Number theory)         */
+
 import Foundation
 
 /*      Greates Common Divisor      */
@@ -97,8 +99,6 @@ func LDE(equationPassed: String) -> String{
 }
 
 print(GCD(a: 5, b: 3))
-
-
 print(LDE(equationPassed: "18x+9y=27"))
 
 
