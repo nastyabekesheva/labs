@@ -7,7 +7,7 @@
 
 import Foundation
 
-class Node{
+class Node: Hashable{
     private var name: String = ""
     
     init(name: String){
@@ -16,6 +16,10 @@ class Node{
     
     func getName() -> String {
         return self.name
+    }
+    
+    func hash(into hasher: inout Hasher) {
+        hasher.combine(name)
     }
 }
 
@@ -26,29 +30,78 @@ extension Node: Equatable {
 }
 
 class Graph{
-    private var nodes: [Node] = []
+    var nodes: [Node] = []
     var edges: [(nodeOne: Node, nodeTwo: Node)] = []
+    var adjacencyList: [Node: [Node]] = [:]
+    var adjacencyMatrix: [Node: [Int]] = [:]
     
     init(nodes: [Node]){
+        
         self.nodes = nodes
+        
     }
     
     func addNode(node: Node){
+        
         self.nodes.append(node)
         print("Adding node \(node.getName()) to the graph...")
+        
     }
     
     func getNodes() -> [Node]{
+        
         return nodes
+        
     }
     
     func printNodes(){
+        
         for node in nodes{
             print(node.getName(), terminator: " ")
         }
+        
+    }
+    
+    func fillList() -> [Node: [Node]]{
+
+        for node in nodes {
+            self.adjacencyList[node] = []
+        }
+
+        for edge in edges {
+            if !adjacencyList[edge.nodeOne]!.contains{ $0 === edge.nodeTwo}{
+                adjacencyList[edge.nodeOne]!.append(edge.nodeTwo)
+                adjacencyList[edge.nodeTwo]!.append(edge.nodeOne)
+            }
+
+        }
+
+        return adjacencyList
+    }
+    
+    func fillMatrix() -> [Node: [Int]]{
+        
+        for node in nodes {
+            self.adjacencyMatrix[node] = []
+        }
+        
+        for nodeOne in nodes{
+            for nodeTwo in nodes{
+                if !adjacencyList[nodeOne]!.contains{ $0 === nodeTwo }{
+                    adjacencyMatrix[nodeOne]!.append(0)
+                }
+                else{
+                    adjacencyMatrix[nodeOne]!.append(1)
+                }
+            }
+        }
+        
+        return adjacencyMatrix
+
     }
     
     func addEdge(nodeOne: Node, nodeTwo: Node){
+        
         if nodes.contains{ $0 === nodeOne } && nodes.contains{ $0 === nodeTwo }{
             edges.append((nodeOne: nodeOne, nodeTwo: nodeTwo))
             print("Adding edge (\(nodeOne.getName()), \(nodeTwo.getName())) to the graph...")
@@ -73,15 +126,17 @@ class Graph{
             edges.append((nodeOne: nodeOne, nodeTwo: nodeTwo))
             print("Adding edge (\(nodeOne.getName()), \(nodeTwo.getName())) to the graph...")
         }
+        
     }
     
-    func DFS(startNode: Node) -> String{
-        var dfs = ""
+    func DFS(startNode: Node) -> [Node]{
+        
+        var dfs: [Node] = []
         var stack = [startNode]
         var visited: [Node] = []
 
         while !stack.isEmpty{
-            var v = stack.popLast()
+            let v = stack.popLast()
             
             if !visited.contains{ $0 === v }{
 
@@ -96,19 +151,20 @@ class Graph{
                 }
                 visited.append(v!)
             }
-            dfs += "\(v!.getName()) "
+            dfs.append(v!)
         }
         return dfs
+        
     }
     
-    func BFS(startNode: Node) -> String{
-        var bfs = ""
+    func BFS(startNode: Node) -> [Node]{
+        var bfs: [Node] = []
         var queqe = [startNode]
         var visited: [Node] = []
         
         while !queqe.isEmpty{
-            var v = queqe.removeFirst()
-            bfs += "\(v.getName()) "
+            let v = queqe.removeFirst()
+            bfs.append(v)
             
             for edge in self.edges {
                 if edge.nodeOne == v && !visited.contains{ $0 === edge.nodeTwo }{
@@ -125,7 +181,125 @@ class Graph{
         
         return bfs
     }
+    
+    func amountOfWalks(nodeOne: Node, nodeTwo: Node, length: Int) -> (Int, [Node: [Int]]){
+        var result = adjacencyMatrix
+        var answer: Int = 0
+        var matrix: [[Int]] = []
+        var resultMatrix: [[Int]] = []
+        var len = length
+        
+        for node in nodes{
+            matrix.append(adjacencyMatrix[node]!)
+            resultMatrix.append(adjacencyMatrix[node]!)
+        }
+        
+        while len > 1{
+            for i in 1...nodes.count-1{
+                for j in 1...nodes.count-1{
+                    for k in 1...nodes.count-1{
+                        resultMatrix[i][j] += matrix[i][k] * resultMatrix[k][j]
+                    }
+                }
+            }
+            len -= 1
+        }
+        for i in 0...nodes.count-1{
+            result[nodes[i]] = resultMatrix[i]
+        }
+        
+        answer = result[nodeOne]![nodes.firstIndex(of: nodeTwo)!]
+     
+        return (answer, result)
+    }
+    
+    func warshall() -> [[Bool]]{
+        
+        var matrixInt: [[Int]] = []
+        var matrix: [[Bool]] = []
+        var warshall: [[Bool]] = []
+        
+        for node in nodes{
+            matrixInt.append(adjacencyMatrix[node]!)
+        }
+        
+        for i in 0...nodes.count-1{
+            matrix.append([])
+            warshall.append([])
+            for _ in 0...nodes.count-1{
+                matrix[i].append(false)
+                warshall[i].append(false)
+            }
+        }
+        
+        
+        for i in 0...nodes.count-1{
+            for j in 0...nodes.count-1{
+                if matrixInt[i][j] == 0{
+                    matrix[i][j] = false
+                }
+                else{
+                    matrix[i][j] = true
+                }
+            }
+        }
+        
+        for i in 0...nodes.count-1{
+            for j in 0...nodes.count-1{
+                for k in 0...nodes.count-1{
+                    warshall[i][j] = warshall[i][j] || (warshall[i][k] && warshall[k][j])
+                 }
+            }
+        }
+        
+        for i in 0...nodes.count-1{
+            warshall[i][i] = true
+        }
+        
+        return warshall
+    }
 
+}
+
+class WeightedGraph: Graph{
+    
+    var weightedEdges: [(nodeOne: Node, nodeTwo: Node, weight: Int)] = []
+    
+    override init(nodes: [Node]){
+        super.init(nodes: nodes)
+        
+    }
+    
+    func addEdge(nodeOne: Node, nodeTwo: Node, weight: Int) {
+        if nodes.contains{ $0 === nodeOne } && nodes.contains{ $0 === nodeTwo }{
+            edges.append((nodeOne: nodeOne, nodeTwo: nodeTwo))
+            weightedEdges.append((nodeOne: nodeOne, nodeTwo: nodeTwo, weight: weight))
+            print("Adding edge (\(nodeOne.getName()), \(nodeTwo.getName())) to the graph...")
+        }
+        else if nodes.contains{ $0 === nodeOne } && !nodes.contains{ $0 === nodeTwo }{
+            print("Missing node: \(nodeTwo.getName())")
+            self.addNode(node: nodeTwo)
+            edges.append((nodeOne: nodeOne, nodeTwo: nodeTwo))
+            weightedEdges.append((nodeOne: nodeOne, nodeTwo: nodeTwo, weight: weight))
+            print("Adding edge (\(nodeOne.getName()), \(nodeTwo.getName())) to the graph...")
+        }
+        else if !nodes.contains{ $0 === nodeOne } && nodes.contains{ $0 === nodeTwo }{
+            print("Missing node: \(nodeOne.getName())")
+            self.addNode(node: nodeOne)
+            edges.append((nodeOne: nodeOne, nodeTwo: nodeTwo))
+            print("Adding edge (\(nodeOne.getName()), \(nodeTwo.getName())) to the graph...")
+        }
+        else{
+            print("Missing node: \(nodeOne.getName())")
+            self.addNode(node: nodeOne)
+            print("Missing node: \(nodeTwo.getName())")
+            self.addNode(node: nodeTwo)
+            edges.append((nodeOne: nodeOne, nodeTwo: nodeTwo))
+            weightedEdges.append((nodeOne: nodeOne, nodeTwo: nodeTwo, weight: weight))
+            print("Adding edge (\(nodeOne.getName()), \(nodeTwo.getName())) to the graph...")
+        }
+        
+    }
 }
 
 let node1 = Node(name: "1")
@@ -139,7 +313,10 @@ g.addEdge(nodeOne: node1, nodeTwo: node2)
 g.addEdge(nodeOne: node3, nodeTwo: node4)
 g.addEdge(nodeOne: node2, nodeTwo: node5)
 g.addEdge(nodeOne: node1, nodeTwo: node4)
+g.addEdge(nodeOne: node3, nodeTwo: node5)
+g.fillList()
+g.fillMatrix()
+g.amountOfWalks(nodeOne: node2, nodeTwo: node3, length: 5)
 
-print(g.DFS(startNode: node1))
-print(g.BFS(startNode: node1))
+
 
