@@ -186,24 +186,32 @@ class Graph{
         var result = adjacencyMatrix
         var answer: Int = 0
         var matrix: [[Int]] = []
+        var temp: [[Int]] = []
         var resultMatrix: [[Int]] = []
-        var len = length
+        var length = length
         
         for node in nodes{
             matrix.append(adjacencyMatrix[node]!)
             resultMatrix.append(adjacencyMatrix[node]!)
         }
-        
-        while len > 1{
-            for i in 1...nodes.count-1{
-                for j in 1...nodes.count-1{
-                    for k in 1...nodes.count-1{
-                        resultMatrix[i][j] += matrix[i][k] * resultMatrix[k][j]
+        for i in 0...nodes.count-1{
+            temp.append([])
+            for _ in 0...nodes.count-1{
+                temp[i].append(0)
+            }
+        }
+
+        for _ in 0...length-2{
+            for i in 0...nodes.count-1{
+                for j in 0...nodes.count-1{
+                    for k in 0...nodes.count-1{
+                        temp[i][j] += resultMatrix[i][k] * matrix[k][j]
                     }
                 }
             }
-            len -= 1
+            resultMatrix = temp
         }
+        
         for i in 0...nodes.count-1{
             result[nodes[i]] = resultMatrix[i]
         }
@@ -213,11 +221,11 @@ class Graph{
         return (answer, result)
     }
     
-    func warshall() -> [[Bool]]{
+    func warshall() -> (matrix: [[Bool]], answer: Bool){
         
         var matrixInt: [[Int]] = []
         var matrix: [[Bool]] = []
-        var warshall: [[Bool]] = []
+        var answer: Bool
         
         for node in nodes{
             matrixInt.append(adjacencyMatrix[node]!)
@@ -225,10 +233,8 @@ class Graph{
         
         for i in 0...nodes.count-1{
             matrix.append([])
-            warshall.append([])
             for _ in 0...nodes.count-1{
                 matrix[i].append(false)
-                warshall[i].append(false)
             }
         }
         
@@ -247,16 +253,58 @@ class Graph{
         for i in 0...nodes.count-1{
             for j in 0...nodes.count-1{
                 for k in 0...nodes.count-1{
-                    warshall[i][j] = warshall[i][j] || (warshall[i][k] && warshall[k][j])
+                    matrix[i][j] = matrix[i][j] || (matrix[i][k] && matrix[k][j])
                  }
             }
         }
         
         for i in 0...nodes.count-1{
-            warshall[i][i] = true
+            matrix[i][i] = true
         }
         
-        return warshall
+        if Array(matrix.joined()).contains(false){
+            return (matrix, false)
+        }
+        else{
+            return (matrix, true)
+        }
+        
+    }
+    
+    func contains(whereToLook: [Node], what: [Node]) -> Bool{
+        
+        var answer = true
+        
+        for node in what{
+            if !whereToLook.contains{ $0 === node }{
+                answer = false
+                break
+            }
+        }
+        
+        return answer
+    }
+    
+    func getTreeIndex(tree: [Int: [Node]], node: Node) -> Int?{
+        
+        var answer: Int?
+        for (key, value) in tree{
+            if value.contains{ $0 === node }{
+                answer = key
+            }
+        }
+        
+        return answer
+    }
+    
+    func mergeTree(tree: [Int: [Node]],treeOfFirstNode: Int, treeOfSecondNode: Int) -> [Int: [Node]]{
+        var newTree = tree
+        if treeOfFirstNode != treeOfSecondNode{
+            newTree[treeOfFirstNode]!.append(contentsOf: newTree[treeOfSecondNode]!)
+            newTree.removeValue(forKey: treeOfSecondNode)
+        }
+        
+        return newTree
     }
 
 }
@@ -298,7 +346,110 @@ class WeightedGraph: Graph{
             weightedEdges.append((nodeOne: nodeOne, nodeTwo: nodeTwo, weight: weight))
             print("Adding edge (\(nodeOne.getName()), \(nodeTwo.getName())) to the graph...")
         }
+    }
+    
+    func contains(whereToLook: [(nodeOne: Node, nodeTwo: Node, weight: Int)], what: [Node]) -> Bool{
         
+        var visited: [Node] = []
+        
+        for node in what{
+            for (nodeOne, nodeTwo, _) in whereToLook{
+                if (node == nodeOne || node == nodeTwo) && !(visited.contains{ $0 === node }){
+                    visited.append(node)
+                    continue
+                }
+            }
+        }
+        if visited == nodes{
+            return true
+        }
+        else{
+            return false
+        }
+    }
+    
+    func kruskal() -> [(nodeOne: Node, nodeTwo: Node, weight: Int)]{
+        let sortedWeightedEdges = weightedEdges.sorted(by: {$0.weight < $1.weight})
+        var edgesToBeSorted = sortedWeightedEdges
+        var forest: [(nodeOne: Node, nodeTwo: Node, weight: Int)] = []
+        var tree: [Int: [Node]] = [:]
+        
+        for i in 0...nodes.count-1{
+            tree.updateValue([nodes[i]], forKey: i+1)
+        }
+        
+        while !edgesToBeSorted.isEmpty && !(tree[1]!.count == nodes.count)  {
+            let edgePoped = edgesToBeSorted.removeFirst()
+            var treeOfFirstNode = Int()
+            var treeOfSecondNode = Int()
+            
+            treeOfFirstNode = self.getTreeIndex(tree: tree, node: edgePoped.nodeOne)!
+            treeOfSecondNode = self.getTreeIndex(tree: tree, node: edgePoped.nodeTwo)!
+            
+            tree = self.mergeTree(tree: tree, treeOfFirstNode: treeOfFirstNode, treeOfSecondNode: treeOfSecondNode)
+            
+        }
+        
+        return forest
+    }
+    
+    func prim(node: Node) -> [(nodeOne: Node, nodeTwo: Node, weight: Int)]{
+        var edgesToBeAdded = weightedEdges
+        var forest: [(nodeOne: Node, nodeTwo: Node, weight: Int)] = []
+        var tree: [Int: [Node]] = [:]
+        var treeOfFirstNode = Int()
+        var treeOfSecondNode = Int()
+        
+        for i in 0...nodes.count-1{
+            tree.updateValue([nodes[i]], forKey: i+1)
+        }
+        
+        var treeKeys: [Int] = []
+        
+        for (key, _) in tree{
+            treeKeys.append(key)
+        }
+        
+        var edge = edgesToBeAdded.removeFirst()
+        forest.append(edge)
+        
+        while !edgesToBeAdded.isEmpty && !(treeKeys.count == 1){
+
+            var connectedEdges: [(nodeOne: Node, nodeTwo: Node, weight: Int)] = []
+            
+            for (nodeOne, nodeTwo, weight) in edgesToBeAdded{
+                if nodeOne == edge.nodeOne || nodeTwo == edge.nodeOne || nodeOne == edge.nodeTwo || nodeTwo == edge.nodeTwo{
+                    connectedEdges.append((nodeOne, nodeTwo, weight))
+                }
+            }
+            connectedEdges = connectedEdges.sorted(by: {$0.weight < $1.weight})
+            forest.append(connectedEdges[0])
+            edgesToBeAdded = edgesToBeAdded.filter(){$0 != connectedEdges[0]}
+            
+            treeOfFirstNode = self.getTreeIndex(tree: tree, node: edge.nodeOne)!
+            treeOfSecondNode = self.getTreeIndex(tree: tree, node: edge.nodeTwo)!
+            
+            tree = self.mergeTree(tree: tree, treeOfFirstNode: treeOfFirstNode, treeOfSecondNode: treeOfSecondNode)
+            treeKeys = treeKeys.filter(){$0 != treeOfSecondNode}
+            
+            treeOfFirstNode = self.getTreeIndex(tree: tree, node: connectedEdges[0].nodeOne)!
+            treeOfSecondNode = self.getTreeIndex(tree: tree, node: connectedEdges[0].nodeTwo)!
+            
+            tree = self.mergeTree(tree: tree, treeOfFirstNode: treeOfFirstNode, treeOfSecondNode: treeOfSecondNode)
+            treeKeys = treeKeys.filter(){$0 != treeOfSecondNode}
+
+            edge = connectedEdges[0]
+            
+        }
+        
+        return forest
+        
+    }
+}
+
+extension Dictionary where Value: Equatable {
+    func allKeys(forValue val: Value) -> [Key] {
+        return self.filter { $1 == val }.map { $0.0 }
     }
 }
 
@@ -316,7 +467,21 @@ g.addEdge(nodeOne: node1, nodeTwo: node4)
 g.addEdge(nodeOne: node3, nodeTwo: node5)
 g.fillList()
 g.fillMatrix()
-g.amountOfWalks(nodeOne: node2, nodeTwo: node3, length: 5)
 
 
+var wg = WeightedGraph(nodes: [node1, node2, node3, node4, node5])
+wg.addEdge(nodeOne: node1, nodeTwo: node2, weight: 3)
+wg.addEdge(nodeOne: node3, nodeTwo: node4, weight: 2)
+wg.addEdge(nodeOne: node2, nodeTwo: node5, weight: 6)
+wg.addEdge(nodeOne: node1, nodeTwo: node4, weight: 3)
+wg.addEdge(nodeOne: node3, nodeTwo: node5, weight: 1)
+wg.addEdge(nodeOne: node3, nodeTwo: node2, weight: 5)
+wg.addEdge(nodeOne: node5, nodeTwo: node4, weight: 7)
+wg.addEdge(nodeOne: node1, nodeTwo: node5, weight: 2)
+wg.addEdge(nodeOne: node5, nodeTwo: node4, weight: 5)
+wg.addEdge(nodeOne: node3, nodeTwo: node5, weight: 8)
+wg.fillList()
+wg.fillMatrix()
+wg.kruskal()
+wg.prim(node: node1)
 
