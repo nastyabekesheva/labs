@@ -20,5 +20,4 @@ class Engine{
         self.model = model
         self.state = .off
     }
-    
 }

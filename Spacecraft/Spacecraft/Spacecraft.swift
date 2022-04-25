@@ -9,7 +9,7 @@ import Foundation
 
 class Spacecraft{
     
-    private var engine: Engine
+    var engine: Engine
     private var model: String
     var captain: Personnel?
     var personnel: [Personnel]?
@@ -17,9 +17,9 @@ class Spacecraft{
     var amountOfScientists: Int = 0
     var amountOfEngineers: Int = 0
     
-    init(model: String, engine: Engine, captain: Personnel?, personnel: [Personnel]?){
+    init(model: String, engine: String, captain: Personnel?, personnel: [Personnel]?){
         self.model = model
-        self.engine = engine
+        self.engine = Engine(engine)
         self.captain = captain
         self.personnel = personnel
         self.solarPanels = nil
@@ -89,86 +89,8 @@ class Spacecraft{
         }
     }
     
-    func startFlight(){
-        print("Preparing for flight...")
-        if amountOfEngineers != 0 && amountOfScientists != 0{
-            if let captain = captain {
-                switch captain.proffesion{
-                case .engineer:
-                    let updatedCaptain = Engineer(person: captain)
-                    if updatedCaptain.checkEngine(engine: engine)!{
-                        if let solarPanels = solarPanels {
-                            var scientist = Scientist()
-                            for person in personnel!{
-                                if person.proffesion == .scientist{
-                                    scientist = Scientist(person: person)
-                                }
-                            }
-                            var panelsState = [Bool]()
-                            for panel in solarPanels{
-                                panelsState.append(scientist.checkPanels(panel: panel)!)
-                            }
-                            if panelsState.contains(true){
-                                print("Ready to fly!\nSetting off...\nSuccess, you're now flying!")
-                            }
-                            else{
-                                print("You should turn your pannels on")
-                                print("Ready to fly!\nSetting off...\nSuccess, you're flying now!")
-                            }
-                        }
-                        else{
-                            print("Cannot fly without solar panels")
-                        }
-                        
-                    }
-                    else{
-                        print("Please turn the engine on")
-                    }
-                case .scientist:
-                    let updatedCaptain = Scientist(person: captain)
-                    var engineer = Engineer()
-                    for person in personnel!{
-                        if person.proffesion == .engineer{
-                            engineer = Engineer(person: person)
-                            if engineer.checkEngine(engine: engine)!{
-                                if let solarPanels = solarPanels {
-                                    var panelsState = [Bool]()
-                                    for panel in solarPanels{
-                                        panelsState.append(updatedCaptain.checkPanels(panel: panel)!)
-                                    }
-                                    if panelsState.contains(true){
-                                        print("Ready to fly!\nSetting off...\nSuccess, your now flying!")
-                                    }
-                                    else{
-                                        print("You should turn your pannels on")
-                                        print("Ready to fly!\nSetting off...\nSuccess, your now flying!")
-                                    }
-                                }
-                                else{
-                                    print("Cannot fly without solar panels")
-                                }
-                            }
-                            else{
-                                print("Cannot fly without engine")
-                            }
-                        }
-                    }
-                    
-                    
-                case .none:
-                    print("Imposter on board")
-                }
-            }
-        }
-        else if amountOfEngineers == 0{
-            print("Cannot fly without engineers")
-        }
-        else if amountOfScientists == 0{
-            print("Cannot fly without scientists")
-        }
-        else{
-            print("Cannot fly without personnel")
-        }
+    func getModel() -> String{
+        return self.model
     }
     
 }

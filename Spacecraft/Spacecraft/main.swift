@@ -8,19 +8,19 @@
 import Foundation
 
 let captain = Engineer("Jack")
-let engine = Engine("F32")
-var spacecraft: Spacecraft? = Spacecraft(model: "X002", engine: engine, captain: captain, personnel: nil)
-var person = spacecraft!.addPersonnel("Lily")
-var scientist: Scientist? = Scientist("Tom")
+var spacecraft = Spacecraft(model: "X002", engine: "SX2", captain: captain, personnel: nil)
+var person = spacecraft.addPersonnel("Lily")
+var scientist = Scientist("Tom")
 let panel = SolarPanel("UO83")
+let me = Personnel("Me")
+scientist.setPanelState(panel: panel, state: .on)
+spacecraft.addPanel(panel: panel)
+spacecraft.addPersonnel(person: scientist)
+captain.setEngineState(engine: spacecraft.engine, state: .on)
 
-scientist!.setPanelState(panel: panel, state: .on)
-spacecraft!.addPanel(panel: panel)
-spacecraft!.addPersonnel(person: scientist!)
-captain.setEngineState(engine: engine, state: .on)
 
-spacecraft!.startFlight()
-dump(spacecraft)
+captain.startFlight(spacecraft: spacecraft)
+//dump(spacecraft)
 
 
 

@@ -21,6 +21,7 @@ class Scientist: Personnel{
         proffesion = .scientist
     }
     
+    
     func checkPanels(panel: SolarPanel) -> Bool?{
         
         switch self.state{
