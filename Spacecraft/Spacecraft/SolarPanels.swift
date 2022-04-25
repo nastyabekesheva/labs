@@ -20,5 +20,9 @@ class SolarPanel{
         self.model = model
         self.state = .off
     }
+    
+    func getModel() -> String{
+        return self.model
+    }
 
 }

@@ -56,7 +56,7 @@ class Personnel{
                                 for panel in occupation!.solarPanels!{
                                     panelsState.append(scientist.checkPanels(panel: panel)!)
                                 }
-                                if panelsState.contains(true){
+                                if !panelsState.contains(false){
                                     print("Ready to fly!\nSetting off...\nSuccess, you're now flying!")
                                 }
                                 else{
@@ -125,10 +125,12 @@ class Personnel{
     
     func wakeUp(){
         self.state = .awake
+        print("\(self.name) is now awake")
     }
     
     func sleep(){
         self.state = .asleep
+        print("\(self.name) is now sleeping")
     }
     
     func getName() -> String{

@@ -69,6 +69,7 @@ class Spacecraft{
         person.occupation = self
 
     }
+    
     func addPanel(_ name: String) -> SolarPanel{
         let temp = SolarPanel(name)
         if let _ = solarPanels {
