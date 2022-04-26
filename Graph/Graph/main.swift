@@ -7,6 +7,10 @@
 
 import Foundation
 
+extension Int{
+    static func inf() -> String{ return "inf"}
+}
+
 class Node: Hashable{
     private var name: String = ""
     
@@ -28,6 +32,13 @@ extension Node: Equatable {
         return nodeOne.name == nodeTwo.name
     }
 }
+
+extension Array  {
+    func contains<E1, E2>(_ tuple: (E1, E2)) -> Bool where E1: Equatable, E2: Equatable, Element == (E1, E2) {
+        return contains { $0.0 == tuple.0 && $0.1 == tuple.1 }
+    }
+}
+
 
 class Graph{
     var nodes: [Node] = []
@@ -306,6 +317,16 @@ class Graph{
         
         return newTree
     }
+    
+    func firsIndex(of: ( nodeOne: Node,  nodeTwo: Node)) -> Int?{
+        for i in 0...edges.count-1{
+            if edges[i].nodeOne == of.nodeOne && edges[i].nodeTwo == of.nodeTwo{
+                return i
+            }
+        }
+        
+        return nil
+    }
 
 }
 
@@ -445,6 +466,56 @@ class WeightedGraph: Graph{
         return forest
         
     }
+    
+    func floydWarshall() -> [Node: [Double]]{
+        var matrix: [Node: [Double]] = [:]
+        
+        for node in nodes{
+            matrix[node] = []
+            for i in 0...nodes.count-1{
+                matrix[node]!.append(Double.infinity)
+            }
+        }
+        
+        for node in nodes{
+            for i in 0...nodes.count-1{
+                if node == nodes[i]{
+                    matrix[node]![i] = 0.0
+                }
+                else{
+                    for edge in edges{
+                        if edge == (node, nodes[i]){
+                            matrix[node]![i] = Double(weightedEdges[self.firsIndex(of: (nodeOne: node, nodeTwo: nodes[i]))!].weight)
+                            matrix[nodes[i]]![nodes.firstIndex(of: node)!] = Double(weightedEdges[self.firsIndex(of: (nodeOne: node, nodeTwo: nodes[i]))!].weight)
+                        }
+                    }
+                }
+            }
+        }
+        
+        var tempMatrix : [[Double]] = []
+        for node in nodes{
+            tempMatrix.append( matrix[node]!)
+        }
+        
+        for k in 0...nodes.count-1{
+            for i in 0...nodes.count-1{
+                for j in 0...nodes.count-1{
+                
+                    let newDistance = tempMatrix[i][k] + tempMatrix[k][j]
+                    if newDistance < tempMatrix[i][j]{
+                        tempMatrix[i][j] = newDistance
+                    }
+                }
+            }
+        }
+        
+        for node in nodes{
+            matrix[node] = tempMatrix[nodes.firstIndex(of: node)!]
+        }
+        
+        return matrix
+    }
 }
 
 extension Dictionary where Value: Equatable {
@@ -483,5 +554,6 @@ wg.addEdge(nodeOne: node3, nodeTwo: node5, weight: 8)
 wg.fillList()
 wg.fillMatrix()
 wg.kruskal()
-wg.prim(node: node1)
+wg.floydWarshall()
+
 

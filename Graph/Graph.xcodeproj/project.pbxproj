@@ -25,6 +25,7 @@
 /* Begin PBXFileReference section */
 		0633884227FF6B2100B48055 /* Graph */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = Graph; sourceTree = BUILT_PRODUCTS_DIR; };
 		0633884527FF6B2100B48055 /* main.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = main.swift; sourceTree = "<group>"; };
+		06668AA12817C61E00801593 /* Tutorial.tutorial */ = {isa = PBXFileReference; lastKnownFileType = text; path = Tutorial.tutorial; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -41,6 +42,7 @@
 		0633883927FF6B2100B48055 = {
 			isa = PBXGroup;
 			children = (
+				06668AA12817C61E00801593 /* Tutorial.tutorial */,
 				0633884427FF6B2100B48055 /* Graph */,
 				0633884327FF6B2100B48055 /* Products */,
 			);
