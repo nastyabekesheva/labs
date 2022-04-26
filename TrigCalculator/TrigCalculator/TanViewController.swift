@@ -46,4 +46,5 @@ class TanViewController: UIViewController {
         HistoryViewController.historyArray.append(answer)
         
     }
+    
 }
