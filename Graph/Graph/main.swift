@@ -115,19 +115,19 @@ class Graph{
         
         if nodes.contains{ $0 === nodeOne } && nodes.contains{ $0 === nodeTwo }{
             edges.append((nodeOne: nodeOne, nodeTwo: nodeTwo))
-            print("Adding edge (\(nodeOne.getName()), \(nodeTwo.getName())) to the graph...")
+            print("Adding edge (\(nodeOne.getName()), \(nodeTwo.getName())) to the graph")
         }
         else if nodes.contains{ $0 === nodeOne } && !nodes.contains{ $0 === nodeTwo }{
             print("Missing node: \(nodeTwo.getName())")
             self.addNode(node: nodeTwo)
             edges.append((nodeOne: nodeOne, nodeTwo: nodeTwo))
-            print("Adding edge (\(nodeOne.getName()), \(nodeTwo.getName())) to the graph...")
+            print("Adding edge (\(nodeOne.getName()), \(nodeTwo.getName())) to the graph")
         }
         else if !nodes.contains{ $0 === nodeOne } && nodes.contains{ $0 === nodeTwo }{
             print("Missing node: \(nodeOne.getName())")
             self.addNode(node: nodeOne)
             edges.append((nodeOne: nodeOne, nodeTwo: nodeTwo))
-            print("Adding edge (\(nodeOne.getName()), \(nodeTwo.getName())) to the graph...")
+            print("Adding edge (\(nodeOne.getName()), \(nodeTwo.getName())) to the graph")
         }
         else{
             print("Missing node: \(nodeOne.getName())")
@@ -135,7 +135,7 @@ class Graph{
             print("Missing node: \(nodeTwo.getName())")
             self.addNode(node: nodeTwo)
             edges.append((nodeOne: nodeOne, nodeTwo: nodeTwo))
-            print("Adding edge (\(nodeOne.getName()), \(nodeTwo.getName())) to the graph...")
+            print("Adding edge (\(nodeOne.getName()), \(nodeTwo.getName())) to the graph")
         }
         
     }
@@ -343,20 +343,20 @@ class WeightedGraph: Graph{
         if nodes.contains{ $0 === nodeOne } && nodes.contains{ $0 === nodeTwo }{
             edges.append((nodeOne: nodeOne, nodeTwo: nodeTwo))
             weightedEdges.append((nodeOne: nodeOne, nodeTwo: nodeTwo, weight: weight))
-            print("Adding edge (\(nodeOne.getName()), \(nodeTwo.getName())) to the graph...")
+            print("Adding edge (\(nodeOne.getName()), \(nodeTwo.getName())) to the graph")
         }
         else if nodes.contains{ $0 === nodeOne } && !nodes.contains{ $0 === nodeTwo }{
             print("Missing node: \(nodeTwo.getName())")
             self.addNode(node: nodeTwo)
             edges.append((nodeOne: nodeOne, nodeTwo: nodeTwo))
             weightedEdges.append((nodeOne: nodeOne, nodeTwo: nodeTwo, weight: weight))
-            print("Adding edge (\(nodeOne.getName()), \(nodeTwo.getName())) to the graph...")
+            print("Adding edge (\(nodeOne.getName()), \(nodeTwo.getName())) to the graph")
         }
         else if !nodes.contains{ $0 === nodeOne } && nodes.contains{ $0 === nodeTwo }{
             print("Missing node: \(nodeOne.getName())")
             self.addNode(node: nodeOne)
             edges.append((nodeOne: nodeOne, nodeTwo: nodeTwo))
-            print("Adding edge (\(nodeOne.getName()), \(nodeTwo.getName())) to the graph...")
+            print("Adding edge (\(nodeOne.getName()), \(nodeTwo.getName())) to the graph")
         }
         else{
             print("Missing node: \(nodeOne.getName())")
@@ -365,7 +365,7 @@ class WeightedGraph: Graph{
             self.addNode(node: nodeTwo)
             edges.append((nodeOne: nodeOne, nodeTwo: nodeTwo))
             weightedEdges.append((nodeOne: nodeOne, nodeTwo: nodeTwo, weight: weight))
-            print("Adding edge (\(nodeOne.getName()), \(nodeTwo.getName())) to the graph...")
+            print("Adding edge (\(nodeOne.getName()), \(nodeTwo.getName())) to the graph")
         }
     }
     
@@ -516,6 +516,71 @@ class WeightedGraph: Graph{
         
         return matrix
     }
+    
+    func dijkstra(source: Node) -> [Node: [Node: Double]]{
+        var source = source
+        var distance: [Node: [Node: Double]] = [:]
+        var queue: [Node] = []
+        
+        for initialNode in nodes{
+            distance[initialNode] = [:]
+            for node in nodes{
+                if node != source{
+                    distance[initialNode]![node] = Double.infinity
+                    queue.append(initialNode)
+                }
+                else{
+                    distance[initialNode]![node] = 0
+                }
+            }
+        }
+        
+        while !queue.isEmpty{
+            var v: Node = source
+            var newDistance = distance
+            var key = distance[source]!.min { a, b in a.value < b.value }!.key
+            if queue.contains{ $0 === key }{
+                v = key
+                newDistance[source] = newDistance[source]?.filter{ $0 != key }
+            }
+            else{
+                
+            }
+            if queue.contains{ $0 === v }{
+                queue = queue.filter { $0 != v }
+
+                for node in adjacencyList[v]!{
+                    if queue.contains{ $0 === node }{
+
+                        var alt = Double.infinity
+
+                        for edge in edges{
+                            if edge == (v, node){
+                                alt = distance[v]![node]! + Double(weightedEdges[self.firsIndex(of: (nodeOne: v, nodeTwo: node))!].weight)
+                                break
+                            }
+                            else if edge == (node, v){
+                                alt = distance[v]![node]! + Double(weightedEdges[self.firsIndex(of: (nodeOne: v, nodeTwo: node))!].weight)
+                                break
+                            }
+                        }
+                        if alt < distance[v]![node]!{
+                            distance[v]![node] = alt
+                        }
+
+                    }
+                }
+                source = v
+                dump(distance)
+                continue
+            }
+            else{
+                continue
+            }
+        }
+        
+        return distance
+    }
 }
 
 extension Dictionary where Value: Equatable {
@@ -555,5 +620,5 @@ wg.fillList()
 wg.fillMatrix()
 wg.kruskal()
 wg.floydWarshall()
-
+dump(wg.dijkstra(source: node1))
 

@@ -44,10 +44,21 @@ class ViewController: UIViewController {
             }
         }
     }
+    @IBAction func multiplyButtonPressed(_ sender: Any) {
+        if let a = Int(firstNumberText.text ?? "0"){
+            if let b = Int(secondNumberText.text ?? "0"){
+                let result = a * b
+                resultLabel.text = "\(a) * \(b) = \(result)"
+                
+                addHistory(result: resultLabel.text ?? "")
+            }
+        }
+    }
     
     @IBAction func clearButtonPressed(_ sender: Any) {
         
         historyLabel.text = ""
+        history.removeAll()
     }
     
     func addHistory(result: String){

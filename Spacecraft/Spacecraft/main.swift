@@ -283,7 +283,7 @@ while state{
             }
             
         case 13:
-            dump(spacecrafts)
+
             print("Exiting the program")
             state = false
         default:
