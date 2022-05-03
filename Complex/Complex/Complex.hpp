@@ -10,7 +10,7 @@
 #define Complex_hpp
 
 template<typename T>
-struct complex {
+class complex {
     
 private:
     T _Re;

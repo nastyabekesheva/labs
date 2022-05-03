@@ -20,16 +20,33 @@
 			);
 			runOnlyForDeploymentPostprocessing = 1;
 		};
+		06EDCC4928216D2E00C96146 /* CopyFiles */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = /usr/share/man/man1/;
+			dstSubfolderSpec = 0;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 1;
+		};
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
 		06EDCC3A28213F4100C96146 /* Complex */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = Complex; sourceTree = BUILT_PRODUCTS_DIR; };
 		06EDCC3D28213F4100C96146 /* main.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = main.cpp; sourceTree = "<group>"; };
 		06EDCC4628213FFD00C96146 /* Complex.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = Complex.hpp; sourceTree = "<group>"; };
+		06EDCC4B28216D2E00C96146 /* ComplexSwift */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = ComplexSwift; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
 		06EDCC3728213F4100C96146 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		06EDCC4828216D2E00C96146 /* Frameworks */ = {
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
@@ -51,6 +68,7 @@
 			isa = PBXGroup;
 			children = (
 				06EDCC3A28213F4100C96146 /* Complex */,
+				06EDCC4B28216D2E00C96146 /* ComplexSwift */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -84,6 +102,23 @@
 			productReference = 06EDCC3A28213F4100C96146 /* Complex */;
 			productType = "com.apple.product-type.tool";
 		};
+		06EDCC4A28216D2E00C96146 /* ComplexSwift */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 06EDCC4F28216D2E00C96146 /* Build configuration list for PBXNativeTarget "ComplexSwift" */;
+			buildPhases = (
+				06EDCC4728216D2E00C96146 /* Sources */,
+				06EDCC4828216D2E00C96146 /* Frameworks */,
+				06EDCC4928216D2E00C96146 /* CopyFiles */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = ComplexSwift;
+			productName = ComplexSwift;
+			productReference = 06EDCC4B28216D2E00C96146 /* ComplexSwift */;
+			productType = "com.apple.product-type.tool";
+		};
 /* End PBXNativeTarget section */
 
 /* Begin PBXProject section */
@@ -91,9 +126,13 @@
 			isa = PBXProject;
 			attributes = {
 				BuildIndependentTargetsInParallel = 1;
+				LastSwiftUpdateCheck = 1330;
 				LastUpgradeCheck = 1330;
 				TargetAttributes = {
 					06EDCC3928213F4100C96146 = {
+						CreatedOnToolsVersion = 13.3;
+					};
+					06EDCC4A28216D2E00C96146 = {
 						CreatedOnToolsVersion = 13.3;
 					};
 				};
@@ -112,6 +151,7 @@
 			projectRoot = "";
 			targets = (
 				06EDCC3928213F4100C96146 /* Complex */,
+				06EDCC4A28216D2E00C96146 /* ComplexSwift */,
 			);
 		};
 /* End PBXProject section */
@@ -122,6 +162,13 @@
 			buildActionMask = 2147483647;
 			files = (
 				06EDCC3E28213F4100C96146 /* main.cpp in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		06EDCC4728216D2E00C96146 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -257,6 +304,32 @@
 			};
 			name = Release;
 		};
+		06EDCC5028216D2E00C96146 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CODE_SIGN_STYLE = Automatic;
+				DEVELOPMENT_TEAM = YWV9MA76N6;
+				ENABLE_HARDENED_RUNTIME = YES;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_ACTIVE_COMPILATION_CONDITIONS = DEBUG;
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+				SWIFT_VERSION = 5.0;
+			};
+			name = Debug;
+		};
+		06EDCC5128216D2E00C96146 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CODE_SIGN_STYLE = Automatic;
+				DEVELOPMENT_TEAM = YWV9MA76N6;
+				ENABLE_HARDENED_RUNTIME = YES;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_COMPILATION_MODE = wholemodule;
+				SWIFT_OPTIMIZATION_LEVEL = "-O";
+				SWIFT_VERSION = 5.0;
+			};
+			name = Release;
+		};
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
@@ -274,6 +347,15 @@
 			buildConfigurations = (
 				06EDCC4228213F4100C96146 /* Debug */,
 				06EDCC4328213F4100C96146 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		06EDCC4F28216D2E00C96146 /* Build configuration list for PBXNativeTarget "ComplexSwift" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				06EDCC5028216D2E00C96146 /* Debug */,
+				06EDCC5128216D2E00C96146 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
