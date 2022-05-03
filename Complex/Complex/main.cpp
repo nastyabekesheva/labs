@@ -7,17 +7,15 @@
 
 #include <iostream>
 #include <string>
+#include <cmath>
 #include "Complex.hpp"
 
 int main(int argc, const char * argv[]) {
     
-    complex<int> ct(8, 3);
-    complex<double> c(1.9, 2.8);
-    c -= 5;
-    std::cin >> c;
+    complex<int> ct(8, 7);
+    complex<double> c(8.5, 3.93);
     std::cout << c;
-    
-    std::cout << c.real() << " " << c.imag() << std::endl;
+    std::cout << (ct >= 8) << std::endl;
     
     return 0;
 }

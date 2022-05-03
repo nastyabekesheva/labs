@@ -5,6 +5,7 @@
 //  Created by Nastya Bekesheva on 03.05.2022.
 //
 
+#pragma once
 #ifndef Complex_hpp
 #define Complex_hpp
 
@@ -51,7 +52,7 @@ public:
         _Im = i;
     };
     
-/*        Overloaded operators for complex numbers arithmetics        */
+/*        Overloaded arithmetic operators        */
     
     template<typename U>
     const complex<T>& operator=(const complex<U> other) {
@@ -99,7 +100,7 @@ public:
         return *this;
     };
     
-/*        Overloaded operators for complex numbers and scalars arithmetics        */
+/*        Overloaded arithmetics operators for complex numbers and scalars        */
     
     template<typename U>
     const complex<T>& operator=(const U scalar) {
@@ -157,7 +158,70 @@ public:
         in >> complex._Re >> complex._Im;
         return in;
     };
+    
+/*        Overloaded bool operators        */
+
+    template<typename U>
+    bool operator==(const complex<U> other) const {
+        return (_Re == other.real() && _Im == other.imag());
+    };
+    template<typename U>
+    bool operator!=(const complex<U> other) const {
+        return (_Re != other.real() || _Im != other.imag());
+    };
+    template<typename U>
+    bool operator>=(const complex<U> other) const {
+        double module1 = sqrt(_Re*_Re + _Im*_Im), module2 = sqrt(other.real()*other.real() + other.imag()*other.imag());
+        return (module1 >= module2);
+    };
+    template<typename U>
+    bool operator<=(const complex<U> other) const {
+        double module1 = sqrt(_Re*_Re + _Im*_Im), module2 = sqrt(other.real()*other.real() + other.imag()*other.imag());
+        return (module1 > module2);
+    };
+    template<typename U>
+    bool operator>(const complex<U> other) const {
+        double module1 = sqrt(_Re*_Re + _Im*_Im), module2 = sqrt(other.real()*other.real() + other.imag()*other.imag());
+        return (module1 >= module2);
+    };
+    template<typename U>
+    bool operator<(const complex<U> other) const {
+        double module1 = sqrt(_Re*_Re + _Im*_Im), module2 = sqrt(other.real()*other.real() + other.imag()*other.imag());
+        return (module1 > module2);
+    };
+    
+/*        Overloaded bool operators for complex numbers and scalars        */
+
+    template<typename U>
+    bool operator==(const U scalar) const {
+        return (_Re == scalar && _Im == 0);
+    };
+    template<typename U>
+    bool operator!=(const U scalar) const {
+        return (_Re != scalar || _Im != 0);
+    };
+    template<typename U>
+    bool operator>=(const U scalar) const {
+        double module = sqrt(_Re*_Re + _Im*_Im);
+        return (module >= scalar);
+    };
+    template<typename U>
+    bool operator<=(const U scalar) const {
+        double module = sqrt(_Re*_Re + _Im*_Im);
+        return (module >= scalar);
+    };
+    template<typename U>
+    bool operator>(const U scalar) const {
+        double module = sqrt(_Re*_Re + _Im*_Im);
+        return (module > scalar);
+    };
+    template<typename U>
+    bool operator<(const U scalar) const {
+        double module = sqrt(_Re*_Re + _Im*_Im);
+        return (module > scalar);
+    };
         
 };
+
 
 #endif /* Complex_hpp */
