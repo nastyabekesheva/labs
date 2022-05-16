@@ -7,6 +7,7 @@
 
 #include <iostream>
 #include <string>
+#include <stdio.h>
 using namespace std;
 
 class Employee{
@@ -37,8 +38,12 @@ public:
     int get_expirience();//   Gets expirience property of an object
     
 //    Overloaded operators
-    Employee & operator=(const Employee & other);//   Overload assigment
+    Employee & operator = (const Employee & other);//   Overload assigment
+    
+    friend ostream & operator << (ostream & output, const Employee & employee);
+    friend istream & operator >> (ostream & input, Employee & employee);
 };
+
 
 class CoolEmployee: public Employee{
 private:
@@ -60,9 +65,14 @@ public:
 //    Getters
     int * get_bonus();//    Returns bonuses of an object
     int get_amount();//    Returns amount of bonuses of an object
+    int get_amount() const;
+    int * get_bonus() const;
     
 //    Overloaded operators
-    bool operator==(const CoolEmployee & other);//   Overload comparasion
+    bool operator == (const CoolEmployee & other);//   Overload comparasion
+    
+    friend ostream & operator << (ostream & output, const CoolEmployee & employee);
+    friend istream & operator >> (ostream & input, CoolEmployee & employee);
 };
 
 Employee::Employee(){ }
@@ -125,16 +135,20 @@ void CoolEmployee::set_bonus(int amount, int *bonus){
     }
 }
 
-int * CoolEmployee::get_bonus(){ return bonus; }
+int * CoolEmployee::get_bonus(){ return this->bonus; }
+
+int * CoolEmployee::get_bonus() const { return this->bonus; }
 
 int CoolEmployee::get_amount(){ return this->amount; }
 
-Employee & Employee::operator=(const Employee & other){
+int CoolEmployee::get_amount() const{ return this->amount; }
+
+Employee & Employee::operator = (const Employee & other){
     this->name = other.name, this->age = other.age, this->position = other.position, this->expirience = other.expirience;
     return *this;
 }
 
-bool CoolEmployee::operator==(const CoolEmployee &other){
+bool CoolEmployee::operator == (const CoolEmployee &other){
     bool temp = false;
     if(this->amount != other.amount){
         temp = true;
@@ -150,6 +164,70 @@ bool CoolEmployee::operator==(const CoolEmployee &other){
     return temp;
 }
 
+ostream & operator << (ostream & output, const Employee & employee){
+    output << "Name: " << employee.name << endl << "Age: " << employee.age << endl << "Position: " << employee.position << endl << "Expirience: " << employee.expirience << endl;
+    
+    return output;
+}
+
+istream & operator >> (istream & input, Employee & employee){
+    cout << "Enter name: ";
+    string name;
+    input >> name;
+    cout << "Enter age: ";
+    int age;
+    input >> age;
+    cout << "Enter position: ";
+    string position;
+    input >> position;
+    cout << "Enter expirience: ";
+    int expirience;
+    input >> expirience;
+    
+    employee.set_info(name, age, position, expirience);
+    
+    return input;
+}
+
+ostream & operator << (ostream & output, const CoolEmployee & employee){
+    output << "Name: " << employee.name << endl << "Age: " << employee.age << endl << "Position: " << employee.position << endl << "Expirience: " << employee.expirience << endl << "Bonus: [ ";
+    
+    for(int i = 0; i < employee.get_amount(); i++){
+        cout << employee.get_bonus()[i] << " ";
+    }
+    cout << "]" << endl;
+    
+    return output;
+}
+
+istream & operator >> (istream & input, CoolEmployee & employee){
+    cout << "Enter name: ";
+    string name;
+    input >> name;
+    cout << "Enter age: ";
+    int age;
+    input >> age;
+    cout << "Enter position: ";
+    string position;
+    input >> position;
+    cout << "Enter expirience: ";
+    int expirience;
+    input >> expirience;
+    
+    employee.set_info(name, age, position, expirience);
+    
+    cout << "Enter amount: ";
+    int amount;
+    cin >> amount;
+    cout << "Enter bonus: ";
+    int * bonus = new int[amount];
+    for(int i = 0; i < amount; i++){
+        cin >> bonus[i];
+    }
+    employee.set_bonus(amount, bonus);
+    
+    return input;
+}
 
 
 
@@ -164,5 +242,12 @@ int main() {
     for(int i = 0; i < cool.get_amount(); i++){
         cout << ptr[i] << endl;
     }
+    cout << me;
+    Employee *person = new Employee();
+    cin >> *person;
+    cout << *person;
+    CoolEmployee nc(*person);
+    cin >> nc;
+    cout << nc;
     return 0;
 }
