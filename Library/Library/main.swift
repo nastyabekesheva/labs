@@ -22,17 +22,6 @@ var people: [Person] = []
 var readers: [Reader: String] = [:]
 var librarians: [Librarian: String] = [:]
 
-//let l = Librarian(name: "l")
-//let r = Reader(name: "r")
-//let thisbook = Book(name: "f", genre: .detctive)
-//let thisbook2 = Book(name: "g", genre: .novel)
-//l.addBook(book: thisbook, to: myLibrary)
-//l.addBook(book: thisbook2, to: myLibrary)
-//r.getBook(book: thisbook, from: myLibrary)
-//r.returnBook(book: thisbook, to: myLibrary)
-//l.deleteBook(book: thisbook2, from: myLibrary)
-//myLibrary.sortByGenre()
-
 
 print(" 1. Sign up as Librarian\n 2. Sign in as Librarian\n 3. Sign up as Reader\n 4. Sign in as Reader\n 5. Exit")
 

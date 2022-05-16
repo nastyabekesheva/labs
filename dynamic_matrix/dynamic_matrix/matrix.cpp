@@ -67,13 +67,14 @@ const int Matrix<T>::col(){
 }
 
 template<typename T>
-void Matrix<T>::getSize(){
+int Matrix<T>::getSize(){
     int size = _rows * _cols;
     cout << "Size of your matrix: " << size << endl;
+    return size;
 }
 
 template<typename T>
-void Matrix<T>::getElement(unsigned int value){
+bool Matrix<T>::getElement(unsigned int value){
     bool temp = false;
     for(auto i = 0; i < _rows; i++){
         for(auto j = 0; j < _cols; j++){
@@ -86,6 +87,7 @@ void Matrix<T>::getElement(unsigned int value){
     if(temp == false){
         cout << "No such element" << endl;
     }
+    return temp;
 }
 
 template<typename T>

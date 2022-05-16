@@ -36,8 +36,10 @@ class Matrix{
 //        Custom methods
         const int row();
         const int col();
-        void getSize();
-        void getElement(unsigned int value);
+    
+//        Needed methodes
+        int getSize();
+        bool getElement(unsigned int value);
 
 //        Stream overloading
         template<typename U>
