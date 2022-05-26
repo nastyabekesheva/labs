@@ -8,6 +8,8 @@
 #include <iostream>
 #include <string>
 #include <stdio.h>
+#include "TemplateEmployee.hpp"
+#include "TemplateEmployee.cpp"
 using namespace std;
 
 class Employee{
@@ -40,8 +42,8 @@ public:
 //    Overloaded operators
     Employee & operator = (const Employee & other);//   Overload assigment
     
-    friend ostream & operator << (ostream & output, const Employee & employee);
-    friend istream & operator >> (ostream & input, Employee & employee);
+    friend ostream & operator << (ostream & output, const Employee & employee);//   Overload output
+    friend istream & operator >> (ostream & input, Employee & employee);//   Overload input
 };
 
 
@@ -71,8 +73,8 @@ public:
 //    Overloaded operators
     bool operator == (const CoolEmployee & other);//   Overload comparasion
     
-    friend ostream & operator << (ostream & output, const CoolEmployee & employee);
-    friend istream & operator >> (ostream & input, CoolEmployee & employee);
+    friend ostream & operator << (ostream & output, const CoolEmployee & employee);//   Overload output
+    friend istream & operator >> (ostream & input, CoolEmployee & employee);//   Overload input
 };
 
 Employee::Employee(){ }
@@ -232,22 +234,12 @@ istream & operator >> (istream & input, CoolEmployee & employee){
 
 
 int main() {
+    TemplateEmployee<double> Me("Me", 18, "junior", 2);
+    cout << Me;
+    CoolTemplateEmployee<double> MeCool(Me);
+    cin >> MeCool;
+    cout << MeCool;
     
-    Employee me("Person", 19, "junior c++ developer", 1);
-    CoolEmployee cool(me);
-    int bonus[5] = {100, 200, 300, 400, 500};
-    cool.set_bonus(5, bonus);
-    cout << cool.get_name() << endl;
-    int * ptr = cool.get_bonus();
-    for(int i = 0; i < cool.get_amount(); i++){
-        cout << ptr[i] << endl;
-    }
-    cout << me;
-    Employee *person = new Employee();
-    cin >> *person;
-    cout << *person;
-    CoolEmployee nc(*person);
-    cin >> nc;
-    cout << nc;
     return 0;
+    
 }
