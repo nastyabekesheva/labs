@@ -8,6 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		060F324A27FEBAD400A41C6A /* main.swift in Sources */ = {isa = PBXBuildFile; fileRef = 060F324927FEBAD400A41C6A /* main.swift */; };
+		0612F5982849257E00738D52 /* Table in Frameworks */ = {isa = PBXBuildFile; productRef = 0612F5972849257E00738D52 /* Table */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXCopyFilesBuildPhase section */
@@ -32,6 +33,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				0612F5982849257E00738D52 /* Table in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -78,6 +80,9 @@
 			dependencies = (
 			);
 			name = DiscreteMath;
+			packageProductDependencies = (
+				0612F5972849257E00738D52 /* Table */,
+			);
 			productName = DiscreteMath;
 			productReference = 060F324627FEBAD400A41C6A /* DiscreteMath */;
 			productType = "com.apple.product-type.tool";
@@ -106,6 +111,9 @@
 				Base,
 			);
 			mainGroup = 060F323D27FEBAD400A41C6A;
+			packageReferences = (
+				0612F5962849257E00738D52 /* XCRemoteSwiftPackageReference "Table" */,
+			);
 			productRefGroup = 060F324727FEBAD400A41C6A /* Products */;
 			projectDirPath = "";
 			projectRoot = "";
@@ -284,6 +292,25 @@
 			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
+
+/* Begin XCRemoteSwiftPackageReference section */
+		0612F5962849257E00738D52 /* XCRemoteSwiftPackageReference "Table" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/ShawnBaek/Table.git";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 1.0.0;
+			};
+		};
+/* End XCRemoteSwiftPackageReference section */
+
+/* Begin XCSwiftPackageProductDependency section */
+		0612F5972849257E00738D52 /* Table */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 0612F5962849257E00738D52 /* XCRemoteSwiftPackageReference "Table" */;
+			productName = Table;
+		};
+/* End XCSwiftPackageProductDependency section */
 	};
 	rootObject = 060F323E27FEBAD400A41C6A /* Project object */;
 }
