@@ -14,8 +14,8 @@ import Table
 
 func GCD(a: Int, b: Int) -> (gcd: Int, r: [Int], q: [Int], u: [Int], v: [Int]) {
     var q: [Int] = []
-    var u: [Int] = [1, 0]
-    var v: [Int] = [0, 1]
+    var v: [Int] = [1, 0]
+    var u: [Int] = [0, 1]
     var r: [Int] = []
     var i = 0
     
@@ -36,20 +36,20 @@ func GCD(a: Int, b: Int) -> (gcd: Int, r: [Int], q: [Int], u: [Int], v: [Int]) {
     while r[r.count - 1] != 0{
         i += 1
         q.append(Int(r[i-1] / r[i]))
-        u.append(u[i-1] - u[i] * q[i-1])
         v.append(v[i-1] - v[i] * q[i-1])
+        u.append(u[i-1] - u[i] * q[i-1])
         r.append(r[i-1] - q[i-1] * r[i])
         print("\(r[i-1]) = \(r[i])\u{22C5}\(q[i-1]) + \(r[i+1])")
     }
-    u.removeLast()
     v.removeLast()
+    u.removeLast()
     if q.count != 0{
         q.removeLast()
     }
     
     var newQ: [String] = [" q\u{1D62} ", ""]
-    var newU: [String] = [" v\u{1D62} "]
-    var newV: [String] = [" u\u{1D62} "]
+    var newV: [String] = [" v\u{1D62} "]
+    var newU: [String] = [" u\u{1D62} "]
     newQ.append(contentsOf: q.map(String.init))
     newU.append(contentsOf: u.map(String.init))
     newV.append(contentsOf: v.map(String.init))
@@ -102,8 +102,8 @@ func LDE(equationPassed: String) -> String {
                 
                 let gcd = GCD(a: a_0, b: b_0)
 
-                let x_0 = gcd.u[gcd.u.count-1]
-                let y_0 = gcd.v[gcd.v.count-1]
+                let x_0 = gcd.v[gcd.v.count-1]
+                let y_0 = gcd.u[gcd.u.count-1]
                 
                 print("\nSpecial case (x\u{2080}, y\u{2080}) : (\(x_0 * c_0), \(y_0 * c_0))\n")
                 
@@ -147,10 +147,10 @@ func CRT(n: [Int], remainder: [Int]) -> (N: Int, allN: [Int], allM: [Int], x: In
         else{
             let d = GCD(a: number, b: N)
             if N > number{
-                M = d.u[d.u.count-1]
+                M = d.v[d.v.count-1]
             }
             else{
-                M = d.v[d.v.count-1]
+                M = d.u[d.u.count-1]
             }
             
             
@@ -246,7 +246,7 @@ func LC(a: Int, b: Int, m: Int) -> Int{
         m /= d.gcd
         
         let newGcd = GCD(a: a, b: m)
-        var c = newGcd.v[newGcd.v.count-1]
+        var c = newGcd.u[newGcd.u.count-1]
         c = (c % m + m) % m
         print("a\u{207B}\u{00B9} \u{2261} \(c) ( mod \(m))")
         print("x \u{2261} \(c)\u{22C5}\(b) ( mod \(m)) \u{2261} \((c*b) % m)")
@@ -294,7 +294,7 @@ print("\nLeast Common Multiplier\n")
 //LCM(a: 542, b: 974)
 //LCM(a: 811, b: 587)
 print("\nLinear Diophantine Equation\n")
-//print(LDE(equationPassed: "948x+134y=10"))
+print(LDE(equationPassed: "948x+134y=10"))
 //print(LDE(equationPassed: "186x+448y=4"))
 //print(LDE(equationPassed: "155x+837y=31"))
 //print(LDE(equationPassed: "387x+570y=12"))
@@ -312,13 +312,13 @@ print("\nEuler's Totient Fuction\n")
 //Euler(n: 724)
 //Euler(n: 569)
 print("\nBig integer modulo\n")
-//expMod(x: 633, power: 769, n: 816)
+expMod(x: 633, power: 769, n: 816)
 //expMod(x: 299, power: 1121, n: 355)
 //expMod(x: 147, power: 112, n: 189)
 //expMod(x: 123, power: 218, n: 327)
 //expMod(x: 264, power: 1681, n: 946)
 print("\nLinear Congruence\n")
-//LC(a: 321, b: 205, m: 500)
+LC(a: 321, b: 205, m: 500)
 //LC(a: 66, b: 135, m: 327)
 //LC(a: 782, b: 35, m: 848)
 //LC(a: 899, b: 235, m: 990)
