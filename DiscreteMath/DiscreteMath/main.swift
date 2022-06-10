@@ -48,8 +48,8 @@ func GCD(a: Int, b: Int) -> (gcd: Int, r: [Int], q: [Int], u: [Int], v: [Int]) {
     }
     
     var newQ: [String] = [" q\u{1D62} ", ""]
-    var newU: [String] = [" u\u{1D62} "]
-    var newV: [String] = [" v\u{1D62} "]
+    var newU: [String] = [" v\u{1D62} "]
+    var newV: [String] = [" u\u{1D62} "]
     newQ.append(contentsOf: q.map(String.init))
     newU.append(contentsOf: u.map(String.init))
     newV.append(contentsOf: v.map(String.init))
@@ -105,7 +105,7 @@ func LDE(equationPassed: String) -> String {
                 let x_0 = gcd.u[gcd.u.count-1]
                 let y_0 = gcd.v[gcd.v.count-1]
                 
-                print("\nSpecial case (x\u{2080}, y\u{2080}) : (\(x_0), \(y_0))\n")
+                print("\nSpecial case (x\u{2080}, y\u{2080}) : (\(x_0 * c_0), \(y_0 * c_0))\n")
                 
                 equation = "x = \(x_0 * c_0) + \(b_0)k\ny = \(y_0 * c_0) - \(a_0)k"
                 
@@ -146,10 +146,15 @@ func CRT(n: [Int], remainder: [Int]) -> (N: Int, allN: [Int], allM: [Int], x: In
         }
         else{
             let d = GCD(a: number, b: N)
-            M = d.u[d.u.count-1]
-//            M = (M % number + number) % number
+            if N > number{
+                M = d.u[d.u.count-1]
+            }
+            else{
+                M = d.v[d.v.count-1]
+            }
             
-            if M == 0 { M = 1}
+            
+            if M == 0 { M = 1 }
         }
         
         allN.append(N)
@@ -172,9 +177,8 @@ func CRT(n: [Int], remainder: [Int]) -> (N: Int, allN: [Int], allM: [Int], x: In
     newM.append(contentsOf: allM.map(String.init))
     print("")
     print(table: [newn, newN, newM] )
-//    x = x % bigN
+    print("x \u{2261} \(x) ( mod \(bigN) ) \u{2261} \((x % bigN + bigN) % bigN)")
     x = (x % bigN + bigN) % bigN
-    print("x \u{2261} \(x % bigN) ( mod \(bigN) )")
     
     return (bigN, allN, allM, x)
     
@@ -278,42 +282,42 @@ func expMod(x: Int, power: Int, n: Int) -> Int{
 }
 
 print("\nGreates Common Divisor\n")
-GCD(a: 123, b: 456)
+GCD(a: 14, b: 3)
 //GCD(a: 809, b: 588)
 //GCD(a: 378, b: 238)
 //GCD(a: 904, b: 293)
 //GCD(a: 731, b: 197)
-//print("\nLeast Common Multiplier\n")
+print("\nLeast Common Multiplier\n")
 //LCM(a: 493, b: 375)
 //LCM(a: 931, b: 189)
 //LCM(a: 812, b: 519)
 //LCM(a: 542, b: 974)
 //LCM(a: 811, b: 587)
 print("\nLinear Diophantine Equation\n")
-print(LDE(equationPassed: "15x+9y=27"))
+//print(LDE(equationPassed: "948x+134y=10"))
 //print(LDE(equationPassed: "186x+448y=4"))
 //print(LDE(equationPassed: "155x+837y=31"))
 //print(LDE(equationPassed: "387x+570y=12"))
 //print(LDE(equationPassed: "327x+795y=24"))
-//print("\nChinese Remainder Theorem\n")
-//print(CRT(n: [16, 29, 57], remainder: [11, 26, 19]))
+print("\nChinese Remainder Theorem\n")
+print(CRT(n: [16, 29, 57], remainder: [11, 26, 19]))
 //print(CRT(n: [25, 27, 23], remainder: [16, 16, 10]))
 //print(CRT(n: [94, 45, 41], remainder: [31, 9, 23]))
 //print(CRT(n: [44, 73, 63], remainder: [13, 32, 27]))
 //print(CRT(n: [49, 43, 47], remainder: [34, 27, 42]))
-//print("\nEuler's Totient Fuction\n")
+print("\nEuler's Totient Fuction\n")
 //Euler(n: 675)
 //Euler(n: 981)
 //Euler(n: 111)
 //Euler(n: 724)
 //Euler(n: 569)
-//print("\nBig integer modulo\n")
+print("\nBig integer modulo\n")
 //expMod(x: 633, power: 769, n: 816)
 //expMod(x: 299, power: 1121, n: 355)
 //expMod(x: 147, power: 112, n: 189)
 //expMod(x: 123, power: 218, n: 327)
 //expMod(x: 264, power: 1681, n: 946)
-//print("\nLinear Congruence\n")
+print("\nLinear Congruence\n")
 //LC(a: 321, b: 205, m: 500)
 //LC(a: 66, b: 135, m: 327)
 //LC(a: 782, b: 35, m: 848)
