@@ -43,7 +43,9 @@ func GCD(a: Int, b: Int) -> (gcd: Int, r: [Int], q: [Int], u: [Int], v: [Int]) {
     }
     u.removeLast()
     v.removeLast()
-    q.removeLast()
+    if q.count != 0{
+        q.removeLast()
+    }
     
     var newQ: [String] = [" q\u{1D62} ", ""]
     var newU: [String] = [" u\u{1D62} "]
@@ -144,8 +146,8 @@ func CRT(n: [Int], remainder: [Int]) -> (N: Int, allN: [Int], allM: [Int], x: In
         }
         else{
             let d = GCD(a: number, b: N)
-            M = d.v[d.v.count-1]
-            M = (M % number + number) % number
+            M = d.u[d.u.count-1]
+//            M = (M % number + number) % number
             
             if M == 0 { M = 1}
         }
@@ -159,6 +161,7 @@ func CRT(n: [Int], remainder: [Int]) -> (N: Int, allN: [Int], allM: [Int], x: In
     
     for i in 0...n.count-1{
         x += remainder[i] * allN[i] * allM[i]
+        
     }
     
     var newn: [String] = [" n\u{1D62} ", ""]
@@ -169,6 +172,8 @@ func CRT(n: [Int], remainder: [Int]) -> (N: Int, allN: [Int], allM: [Int], x: In
     newM.append(contentsOf: allM.map(String.init))
     print("")
     print(table: [newn, newN, newM] )
+//    x = x % bigN
+    x = (x % bigN + bigN) % bigN
     print("x \u{2261} \(x % bigN) ( mod \(bigN) )")
     
     return (bigN, allN, allM, x)
@@ -229,6 +234,7 @@ func LC(a: Int, b: Int, m: Int) -> Int{
     var a = a
     var b = b
     var m = m
+    var initial_m = m
     
     if b % d.gcd == 0{
         a /= d.gcd
@@ -241,26 +247,30 @@ func LC(a: Int, b: Int, m: Int) -> Int{
         print("a\u{207B}\u{00B9} \u{2261} \(c) ( mod \(m))")
         print("x \u{2261} \(c)\u{22C5}\(b) ( mod \(m)) \u{2261} \((c*b) % m)")
                    
-        return (c*b) % m
+        if d.gcd == 1{
+            return (c*b) % m
+        }
+        else{
+            for i in 1...d.gcd-1{
+                print("x \u{2261} \((c*b) % m + (i*initial_m) / d.gcd)")
+            }
+        }
     }
     
     return 0
 }
 
-func bigMod(x: Int, power: Int, n: Int) -> Int{
-
+func expMod(x: Int, power: Int, n: Int) -> Int{
     
     if GCD(a: x, b: n).gcd == 1{
-
         _ = primeFactors(n: n)
-        let a = x % n
-        let b = power % (n - 1)
-        print("\n\(x) \u{2261} \(a) ( mod \(n) )")
-        print("\(power) \u{2261} \(b) ( mod \(n - 1) )\n")
-        print("\(x)^\(power) -> \(a)^\(b)\n")
-        print("\(a)^\(b) \u{2261} \(Int(pow(Double(a), Double(b))) % n) ( mod \(n) )")
+        let f = Euler(n: n)
         
-        return Int(pow(Double(a), Double(b)))
+        let remainder = power % f
+        
+        print("\(x)^\(power) \u{2261} \(x)^\(power - remainder)\u{22C5}\(Int(pow(Double(x), Double(remainder)))) ( mod \(n))  \u{2261} \(Int(pow(Double(x), Double(remainder))))")
+        
+        return Int(pow(Double(x), Double(remainder)))
         
     }
     
@@ -269,19 +279,45 @@ func bigMod(x: Int, power: Int, n: Int) -> Int{
 
 print("\nGreates Common Divisor\n")
 GCD(a: 123, b: 456)
-print("\nLeast Common Multiplier\n")
-LCM(a: 5, b: 3)
+//GCD(a: 809, b: 588)
+//GCD(a: 378, b: 238)
+//GCD(a: 904, b: 293)
+//GCD(a: 731, b: 197)
+//print("\nLeast Common Multiplier\n")
+//LCM(a: 493, b: 375)
+//LCM(a: 931, b: 189)
+//LCM(a: 812, b: 519)
+//LCM(a: 542, b: 974)
+//LCM(a: 811, b: 587)
 print("\nLinear Diophantine Equation\n")
-print(LDE(equationPassed: "18x+9y=27"))
-print("\nChinese Remainder Theorem\n")
-print(CRT(n: [25, 27, 2], remainder: [16, 16, 10]))
-print("\nEuler's Totient Fuction\n")
-Euler(n: 32)
-//print("\nPrimes\n")
-//print(primeFactors(n: 315))
-print("\nBig mod\n")
-bigMod(x: 5555, power: 2222, n: 7)
-print("\nLinear Congruence\n")
-LC(a: 129, b: 209, m: 889)
+print(LDE(equationPassed: "15x+9y=27"))
+//print(LDE(equationPassed: "186x+448y=4"))
+//print(LDE(equationPassed: "155x+837y=31"))
+//print(LDE(equationPassed: "387x+570y=12"))
+//print(LDE(equationPassed: "327x+795y=24"))
+//print("\nChinese Remainder Theorem\n")
+//print(CRT(n: [16, 29, 57], remainder: [11, 26, 19]))
+//print(CRT(n: [25, 27, 23], remainder: [16, 16, 10]))
+//print(CRT(n: [94, 45, 41], remainder: [31, 9, 23]))
+//print(CRT(n: [44, 73, 63], remainder: [13, 32, 27]))
+//print(CRT(n: [49, 43, 47], remainder: [34, 27, 42]))
+//print("\nEuler's Totient Fuction\n")
+//Euler(n: 675)
+//Euler(n: 981)
+//Euler(n: 111)
+//Euler(n: 724)
+//Euler(n: 569)
+//print("\nBig integer modulo\n")
+//expMod(x: 633, power: 769, n: 816)
+//expMod(x: 299, power: 1121, n: 355)
+//expMod(x: 147, power: 112, n: 189)
+//expMod(x: 123, power: 218, n: 327)
+//expMod(x: 264, power: 1681, n: 946)
+//print("\nLinear Congruence\n")
+//LC(a: 321, b: 205, m: 500)
+//LC(a: 66, b: 135, m: 327)
+//LC(a: 782, b: 35, m: 848)
+//LC(a: 899, b: 235, m: 990)
+//LC(a: 135, b: 159, m: 519)
 
 
