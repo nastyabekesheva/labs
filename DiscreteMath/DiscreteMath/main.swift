@@ -101,9 +101,20 @@ func LDE(equationPassed: String) -> String {
                 print("Updated equation:\n\(a_0)x + \(b_0)y = \(c_0)\n")
                 
                 let gcd = GCD(a: a_0, b: b_0)
+                
+                var x_0 = 0
+                var y_0 = 0
+                
+                if a_0 < b_0 {
+                    x_0 = gcd.u[gcd.u.count-1]
+                    y_0 = gcd.v[gcd.v.count-1]
+                }
+                else {
+                    x_0 = gcd.v[gcd.v.count-1]
+                    y_0 = gcd.u[gcd.u.count-1]
+                }
 
-                let x_0 = gcd.v[gcd.v.count-1]
-                let y_0 = gcd.u[gcd.u.count-1]
+                
                 
                 print("\nSpecial case (x\u{2080}, y\u{2080}) : (\(x_0 * c_0), \(y_0 * c_0))\n")
                 
@@ -169,7 +180,7 @@ func CRT(n: [Int], remainder: [Int]) -> (N: Int, allN: [Int], allM: [Int], x: In
         
     }
     
-    var newn: [String] = [" n\u{1D62} ", ""]
+    var newn: [String] = [" n\u{1D62} "]
     var newN: [String] = [" N\u{1D62} "]
     var newM: [String] = [" M\u{1D62} "]
     newn.append(contentsOf: n.map(String.init))
@@ -272,7 +283,7 @@ func expMod(x: Int, power: Int, n: Int) -> Int{
         
         let remainder = power % f
         
-        print("\(x)^\(power) \u{2261} \(x)^\(power - remainder)\u{22C5}\(Int(pow(Double(x), Double(remainder)))) ( mod \(n))  \u{2261} \(Int(pow(Double(x), Double(remainder))))")
+        print("\(x)^\(power) \u{2261} \(x)^\(power - remainder)\u{22C5}\(Int(pow(Double(x), Double(remainder)))) ( mod \(n))  \u{2261} \(Int(pow(Double(x), Double(remainder))) % n) ")
         
         return Int(pow(Double(x), Double(remainder)))
         
@@ -282,7 +293,7 @@ func expMod(x: Int, power: Int, n: Int) -> Int{
 }
 
 print("\nGreates Common Divisor\n")
-GCD(a: 14, b: 3)
+//GCD(a: 14, b: 3)
 //GCD(a: 809, b: 588)
 //GCD(a: 378, b: 238)
 //GCD(a: 904, b: 293)
@@ -294,13 +305,13 @@ print("\nLeast Common Multiplier\n")
 //LCM(a: 542, b: 974)
 //LCM(a: 811, b: 587)
 print("\nLinear Diophantine Equation\n")
-print(LDE(equationPassed: "948x+134y=10"))
+print(LDE(equationPassed: "494x+627y=133"))
 //print(LDE(equationPassed: "186x+448y=4"))
 //print(LDE(equationPassed: "155x+837y=31"))
 //print(LDE(equationPassed: "387x+570y=12"))
 //print(LDE(equationPassed: "327x+795y=24"))
 print("\nChinese Remainder Theorem\n")
-print(CRT(n: [16, 29, 57], remainder: [11, 26, 19]))
+//print(CRT(n: [51, 46, 37], remainder: [34, 38, 14]))
 //print(CRT(n: [25, 27, 23], remainder: [16, 16, 10]))
 //print(CRT(n: [94, 45, 41], remainder: [31, 9, 23]))
 //print(CRT(n: [44, 73, 63], remainder: [13, 32, 27]))
@@ -312,15 +323,18 @@ print("\nEuler's Totient Fuction\n")
 //Euler(n: 724)
 //Euler(n: 569)
 print("\nBig integer modulo\n")
-expMod(x: 633, power: 769, n: 816)
+//expMod(x: 200, power: 579, n: 291)
 //expMod(x: 299, power: 1121, n: 355)
 //expMod(x: 147, power: 112, n: 189)
 //expMod(x: 123, power: 218, n: 327)
 //expMod(x: 264, power: 1681, n: 946)
-print("\nLinear Congruence\n")
-LC(a: 321, b: 205, m: 500)
-//LC(a: 66, b: 135, m: 327)
-//LC(a: 782, b: 35, m: 848)
+print("\nLinear Congruence\n") 
+print("\n#1\n")
+//LC(a: 954, b: 70, m: 960)
+print("\n#2\n")
+//LC(a: 37, b: 63, m: 173)
+print("\n#3\n")
+//LC(a: 36, b: 448, m: 620)
 //LC(a: 899, b: 235, m: 990)
 //LC(a: 135, b: 159, m: 519)
 
