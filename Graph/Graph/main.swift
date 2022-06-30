@@ -517,16 +517,16 @@ class WeightedGraph: Graph{
         return matrix
     }
     
-    func dijkstra(source: Node) -> [Node: [Node: Double]]{
+    func dijkstras(source: Node) -> [Node: [Node: Int]]{
         var source = source
-        var distance: [Node: [Node: Double]] = [:]
+        var distance: [Node: [Node: Int]] = [:]
         var queue: [Node] = []
         
         for initialNode in nodes{
             distance[initialNode] = [:]
             for node in nodes{
                 if node != source{
-                    distance[initialNode]![node] = Double.infinity
+                    distance[initialNode]![node] = -1
                     queue.append(initialNode)
                 }
                 else{
@@ -541,7 +541,7 @@ class WeightedGraph: Graph{
             var key = distance[source]!.min { a, b in a.value < b.value }!.key
             if queue.contains{ $0 === key }{
                 v = key
-                newDistance[source] = newDistance[source]?.filter{ $0 != key }
+                newDistance[source] = newDistance[source]?.filter{ $0.key != key }
             }
             else{
                 
@@ -552,15 +552,15 @@ class WeightedGraph: Graph{
                 for node in adjacencyList[v]!{
                     if queue.contains{ $0 === node }{
 
-                        var alt = Double.infinity
+                        var alt = -1
 
                         for edge in edges{
                             if edge == (v, node){
-                                alt = distance[v]![node]! + Double(weightedEdges[self.firsIndex(of: (nodeOne: v, nodeTwo: node))!].weight)
+                                alt = distance[v]![node]! + weightedEdges[self.firsIndex(of: (nodeOne: v, nodeTwo: node))!].weight
                                 break
                             }
                             else if edge == (node, v){
-                                alt = distance[v]![node]! + Double(weightedEdges[self.firsIndex(of: (nodeOne: v, nodeTwo: node))!].weight)
+                                alt = distance[v]![node]! + weightedEdges[self.firsIndex(of: (nodeOne: node, nodeTwo: v))!].weight
                                 break
                             }
                         }
@@ -580,6 +580,50 @@ class WeightedGraph: Graph{
         }
         
         return distance
+    }
+    
+    func dijkstra(source: Node) -> [Node: [Node: Int]] {
+        let p: [Node: [Node: Int]] = [:]
+        var distance: [Node: Int?] = [:]
+        var prev: [Node: Node?] = [:]
+        var queue: [Node] = []
+        
+        for node in nodes{
+            distance[node] = Int.max
+            prev[node] = nil
+            queue.append(node)
+        }
+        
+        distance[source] = 0
+
+        while !queue.isEmpty{
+            let u = distance.min{ $0.value! < $1.value! }?.key
+            queue = queue.filter { $0 != u }
+
+            
+            for node in adjacencyList[u!]!{
+                if queue.contains{ $0 === node }{
+                    var alt = Int.max
+                    for edge in edges{
+                        if edge == (u, node){
+                            alt = distance[u!]!! + weightedEdges[self.firsIndex(of: (nodeOne: u!, nodeTwo: node))!].weight
+                            break
+                        }
+                        else if edge == (node, u){
+                            alt = distance[u!]!! + weightedEdges[self.firsIndex(of: (nodeOne: node, nodeTwo: u!))!].weight
+                            break
+                        }
+                    }
+                    
+                    if alt < distance[node]!! && distance[u!] != Int.max{
+                        distance[node] = alt
+                        prev[node] = u!
+                    }
+                }
+            }
+        }
+        
+        return p
     }
 }
 
@@ -620,5 +664,10 @@ wg.fillList()
 wg.fillMatrix()
 wg.kruskal()
 wg.floydWarshall()
-dump(wg.dijkstra(source: node1))
+//dump(wg.adjacencyList[node1])
+//dump(wg.dijkstra(source: node1))
+var queue = [2, 4, 5, 6,7 ,2, 5, 8, 0, 4, 3]
+queue = queue.filter { $0 != 2 }
+print(queue)
+
 
