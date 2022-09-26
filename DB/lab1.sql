@@ -20,3 +20,10 @@ CREATE TABLE student (
     address VARCHAR(255),
     students_group INTEGER REFERENCES students_group(Id)
 );
+
+CREATE TABLE grade_book (
+    Id int NOT NULL PRIMARY KEY,
+    student_id INTEGER REFERENCES student(Id),
+    subject_id INTEGER REFERENCES subject(Id),
+    grade INTEGER 
+);
