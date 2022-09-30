@@ -5,7 +5,7 @@
 ## OOP
 * a lot of labs on OOP in c++/swift/python
 * II semester of programming
-## MyMath
+## Math
 * programmed algorithms for calculations in dm, physics etc.
 * all semesters
 ## DB
