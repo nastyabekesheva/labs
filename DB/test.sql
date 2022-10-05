@@ -1,16 +1,16 @@
-/*USE master
+USE master
 GO
-DROP DATABASE StudensDB, Students, StudentDB ;  
-GO 
+/*DROP DATABASE StudensDB, Students, StudentDB ;  
+GO*/ 
 IF NOT EXISTS (
  SELECT name
  FROM sys.databases
- WHERE name = N'StudentsDB'
+ WHERE name = N'DormitoryDB'
 )
- CREATE DATABASE [StudentDB];
+ CREATE DATABASE [DormitoryDB];
 GO
 IF SERVERPROPERTY('ProductVersion') > '12'
- ALTER DATABASE [StudentDB] SET QUERY_STORE=ON;
-GO*/
+ ALTER DATABASE [DormitoryDB] SET QUERY_STORE=ON;
+GO
 
 
