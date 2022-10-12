@@ -1,8 +1,3 @@
-/*INSERT INTO subject (Id, name) VALUES (1, 'DB');
-INSERT INTO students_group (Id, name, course, semester) VALUES (1, 'FI-12', 2, 1);
-INSERT INTO student (Id, first_name, last_name, middle_name, sex,  birthday, address, students_group_id) VALUES (1, 'Nastya', 'Bekesheva', 'Alexandr', 'female', '09-06-2004', 'Osinnia st.', 1);
-INSERT INTO grade_book (Id, student_id, subject_id, grade) VALUES (1, 1, 1, 120);*/
-
 DELETE FROM subject;
 DELETE FROM students_group;
 DELETE FROM student;
@@ -34,7 +29,7 @@ INSERT INTO student (Id, first_name, middle_name, last_name, sex,  birthday, add
 INSERT INTO student (Id, first_name, middle_name, last_name, sex,  birthday, address, students_group_id) VALUES (2, 'Jess', 'Augusta', 'Serafini', 'female', '1991-10-11', '3965 Wright Court', 2);
 INSERT INTO student (Id, first_name, middle_name, last_name, sex,  birthday, address, students_group_id) VALUES (3, 'Rosella', 'Reimund', 'Reimund', 'female', '1993-04-27', '4255 Richison Drive', 3);
 INSERT INTO student (Id, first_name, middle_name, last_name, sex,  birthday, address, students_group_id) VALUES (4, 'Calla', 'Augusto', 'Stauss', 'female', '1994-06-24', '1430 Lewis Street', 4);
-INSERT INTO student (Id, first_name, middle_name, last_name, sex,  birthday, address, students_group_id) VALUES (5, 'Alesia', 'Dee', 'Eads', 'female', '01994-07-29', '1437 Woodridge Lane', 5);
+INSERT INTO student (Id, first_name, middle_name, last_name, sex,  birthday, address, students_group_id) VALUES (5, 'Alesia', 'Dee', 'Eads', 'female', '1994-07-29', '1437 Woodridge Lane', 5);
 INSERT INTO student (Id, first_name, middle_name, last_name, sex,  birthday, address, students_group_id) VALUES (6, 'Westley', 'Carter', 'Liam', 'male', '1995-02-14', '758 Progress Way', 6);
 INSERT INTO student (Id, first_name, middle_name, last_name, sex,  birthday, address, students_group_id) VALUES (7, 'Dillan', 'Scotty', 'Jae', 'male', '1996-04-23', '3504 Daffodil Lane', 7);
 INSERT INTO student (Id, first_name, middle_name, last_name, sex,  birthday, address, students_group_id) VALUES (8, 'Julyan', 'Tyberiy', 'Case', 'male', '2003-07-18', '1322 Pearl Street', 8);
@@ -53,6 +48,6 @@ INSERT INTO grade_book (Id, student_id, subject_id, grade) VALUES (9, 9, 9, 78);
 INSERT INTO grade_book (Id, student_id, subject_id, grade) VALUES (10, 10, 10, 94);
 
 SELECT * FROM subject
-"""SELECT * FROM students_group
+SELECT * FROM students_group
 SELECT * FROM student
-SELECT * FROM grade_book"""
+SELECT * FROM grade_book
