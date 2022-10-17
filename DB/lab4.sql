@@ -1,4 +1,4 @@
-/*ALTER TABLE subject
+ALTER TABLE subject
     ADD hours INT NOT NULL DEFAULT(0)
 
 UPDATE subject
@@ -46,7 +46,7 @@ UPDATE subject
 
 UPDATE subject
     SET hours = 144, type = 'test'
-        WHERE Id = 10;*/
+        WHERE Id = 10;
 
 SELECT name, grade FROM grade_book JOIN subject ON subject.Id = grade_book.subject_id
     WHERE student_id = 1 AND hours = 108 AND type = 'test' 
