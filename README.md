@@ -9,5 +9,5 @@
 * programmed algorithms for calculations in dm, physics etc.
 * all semesters
 ## DB
-* labs in MsSql(I worked in azure data studio) for Data Bases
+* labs in Sql Server(I worked in azure data studio) for Data Bases
 * III semester 
