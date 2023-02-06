@@ -10,4 +10,7 @@
 * all semesters
 ## DB
 * labs in Sql Server(I worked in azure data studio) for Data Bases
-* III semester 
+* III semester
+## DSA
+* python/c++ labs for Data structures and algorithms 
+* IV semester
