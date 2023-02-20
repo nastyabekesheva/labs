@@ -46,8 +46,17 @@ int main(int argc, const char * argv[]) {
                     std::string n;
                     std::cin >> n;
                     if (isNumber(n) == true){
-                        TowersOfHanoi('A', 'B', 'C', stoi(n));
-                        break;
+                        if (stoi(n) > 0){
+                            TowersOfHanoi T(stoi(n));
+                            T.start();
+                            std::cout << "Steps taken: " << steps << std::endl;
+                            break;
+                        }
+                        else {
+                            std::cout << "Invalid input" << std::endl;
+                            break;
+                        }
+                        
                     }
                     else {
                         std::cout << "Invalid input" << std::endl;
