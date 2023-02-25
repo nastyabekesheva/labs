@@ -42,7 +42,8 @@ void selectionSort(int* array, int size)
         min = i; //  set min to element i
         for(int j = i+1; j < size; j++)
         {
-            if(lessThan(array[j], array[min]))
+            C++;
+            if(array[j] < array[min])
             {
                 min = j; //  find index of actual min element
             }
@@ -58,7 +59,7 @@ void shellSort(int* array, int size)
     int knuth_interval = 1;
     while (knuth_interval < size/3)
     {
-        knuth_interval = knuth_interval * 3 + 1; //  find initial interval with Knuth's formula h_(k-1)=3h_k+1
+        knuth_interval = knuth_interval * 3 + 1; //  find initial interval with Knuth's formula h_(k-1)=2h_k+1
     }
     while (knuth_interval > 0)
     {
@@ -66,13 +67,15 @@ void shellSort(int* array, int size)
         {
             int insertion_value = array[i]; //  initialize value that's gonna be inserted later
             int j = i; //  index of current element
-            C++;
+            
             while ((j > knuth_interval-1) && array[j-knuth_interval] >= insertion_value) //  compare
             {
+                C++;
                 M++;
                 array[j] = array[j-knuth_interval]; //  move element
                 j = j - knuth_interval; //  change index
             }
+            C++;
             M++;
             array[j] = insertion_value; //  move element that's marked as 'to be inserted'
         }
@@ -170,7 +173,7 @@ bool isNumber(const std::string &s) {
 
 int main(int argc, const char * argv[]) {
     // insert code here...
-    bool action = true;
+    bool action = false;
     while (action)
     {
         std::cout << "Enter key to procede:\n 1. Selection sort\n 2. Shell sort\n 3. Exit\n";
@@ -267,5 +270,12 @@ int main(int argc, const char * argv[]) {
         }
         else { std::cout << "Invalid input" << std::endl; }
     }
+    efficiencyTest(1, true, 100);
+    efficiencyTest(2, true, 100);
+    efficiencyTest(1, false, 1000);
+    efficiencyTest(2, false, 1000);
+    efficiencyTest(1, false, 10000);
+    efficiencyTest(2, false, 10000);
+    efficiencyTest(2, false, 1000000);
     return 0;
 }
