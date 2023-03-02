@@ -14,3 +14,6 @@
 ## DSA
 * python/c++ labs for Data structures and algorithms 
 * IV semester
+## CM
+* computer graphics
+* IV semester
