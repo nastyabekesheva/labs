@@ -8,6 +8,7 @@
 #include <stdio.h>
 #include <iostream>
 #include <string>
+#include <sstream>
 
 template<typename T>
 struct Node
@@ -30,21 +31,38 @@ private:
 public:
     unsigned int size();
     unsigned int max_size();
+    Node<T> *head();
+    Node<T> *tail();
     void print();
     LinkedList(): _head(nullptr), _tail(nullptr), _size(0), _max_size(4294967295) {}
     ~LinkedList();
     void insert(T data);
     void append(T data);
-    void pop(T data);
+    void pop_item(T data);
+    void pop_last();
+    void pop_first();
     Node<T> *search(T data);
     void set_max_size(unsigned int n);
     template<typename U>
     friend std::ostream & operator << (std::ostream &out, const LinkedList<U> &lst);
     template<typename U>
     friend std::istream & operator >> (std::istream &in,  LinkedList<T> &lst);
+
     
     
 };
+
+template<typename T>
+Node<T>* LinkedList<T>::head()
+{
+    return this->_head;
+}
+
+template<typename T>
+Node<T>* LinkedList<T>::tail()
+{
+    return this->_head;
+}
 
 template<typename T>
 LinkedList<T>::~LinkedList<T>()
@@ -93,7 +111,6 @@ template<typename T>
 void LinkedList<T>::insert(T data)
 {
     Node<T> *node = new Node(data);
-    //Node<T> *tmp = _head;
     
     if (!_head)
     {
@@ -121,6 +138,7 @@ void LinkedList<T>::append(T data)
     else if (_tail->_next == nullptr)
     {
         _tail->_next = node;
+        node->_prev = _tail;
         _tail = node;
     }
     _size++;
@@ -147,10 +165,12 @@ std::istream & operator >> (std::istream &in, LinkedList<T> &lst)
     while (tmp != "/~" && lst.size() < lst.max_size())
     {
         in >> tmp;
-        lst.append(tmp);
-        
+        std::istringstream iss(tmp);
+        T f;
+        iss >> std::noskipws >> f;
+        lst.append(f);
     }
-    lst.pop("/~");
+    lst.pop_last();
     return in;
 }
 
@@ -171,7 +191,7 @@ Node<T>* LinkedList<T>::search(T data)
 }
 
 template<typename T>
-void LinkedList<T>::pop(T data)
+void LinkedList<T>::pop_item(T data)
 {
     Node<T>* data_node = search(data);
     Node<T>* tmp = _head;
@@ -188,9 +208,48 @@ void LinkedList<T>::pop(T data)
             {
                 tmp->_next = data_node->_next;
                 delete data_node;
+                _size--;
                 return;
             }
             tmp = tmp->_next;
         }
     }
 }
+
+template<typename T>
+void LinkedList<T>::pop_last()
+{
+    if (_head)
+    {
+        if (_head->_next){
+            Node<T> *tmp = _tail->_prev;
+            _tail->_prev = nullptr;
+            tmp->_next = nullptr;
+            delete _tail;
+            _tail = tmp;
+            _size--;
+        }
+        else
+        {
+            _head = nullptr;
+        }
+        
+        
+    }
+}
+
+
+template<typename T>
+void LinkedList<T>::pop_first()
+{
+    if (_head)
+    {
+        Node<T> *tmp = _head->_next;
+        _head->_next = nullptr;
+        tmp->_prev = nullptr;
+        delete _head;
+        _head = tmp;
+        _size--;
+    }
+}
+
