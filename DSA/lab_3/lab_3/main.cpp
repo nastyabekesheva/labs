@@ -32,6 +32,7 @@ int main(int argc, const char * argv[]) {
     auto duration_da = duration_cast<std::chrono::microseconds>(stop_da - start_da);
     std::cout << "Time taken: "
                      << duration_da.count() << " microseconds" << std::endl;
+    std::cout << lst.tail()->_prev->_data << std::endl;
     
     return 0;
 }

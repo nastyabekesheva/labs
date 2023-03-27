@@ -61,7 +61,7 @@ Node<T>* LinkedList<T>::head()
 template<typename T>
 Node<T>* LinkedList<T>::tail()
 {
-    return this->_head;
+    return this->_tail;
 }
 
 template<typename T>
