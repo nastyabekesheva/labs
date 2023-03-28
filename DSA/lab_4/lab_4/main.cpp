@@ -6,9 +6,15 @@
 //
 
 #include <iostream>
+#include "Queue.cpp"
 
 int main(int argc, const char * argv[]) {
-    // insert code here...
+    Queue<int> q;
+    int d = q.deQueue();
+    std::cin >> q;
+    std::cout << q;
+    int x = q.deQueue();
+    std::cout << q;
     std::cout << "Hello, World!\n";
     return 0;
 }
