@@ -338,11 +338,12 @@ func expMod(x: Int, power: Int, n: Int) -> Int{
 //LC(a: 899, b: 235, m: 990)
 //LC(a: 135, b: 159, m: 519)
 
-print("\nEuler's Totient Fuction\n")
-Euler(n: 14553)
+//print("\nEuler's Totient Fuction\n")
+//Euler(n: 10816)
 print("\nBig integer modulo\n")
-expMod(x: 5, power: 82, n: 24)
-print("\nChinese Remainder Theorem\n")
-print(CRT(n: [5, 13, 9, 7], remainder: [2, 8, 2, 5]))
+expMod(x: 2, power: 433, n: 777)
+//print("\nChinese Remainder Theorem\n")
+//print(CRT(n: [45,23], remainder: [10,21]))
+//print(GCD(a: 25, b: 111))
 
 

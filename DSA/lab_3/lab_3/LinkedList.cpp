@@ -17,6 +17,15 @@ struct Node
     Node* _next;
     Node* _prev;
     Node(T data): _data(data), _next(nullptr), _prev(nullptr) {}
+    ~Node()
+    {
+        if (_data)
+            delete _data;
+        if (_next)
+            delete _next;
+        if (_prev)
+            delete _next;
+    }
 };
 
 template<typename T>
