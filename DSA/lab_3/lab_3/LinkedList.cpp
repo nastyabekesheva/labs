@@ -19,8 +19,6 @@ struct Node
     Node(T data): _data(data), _next(nullptr), _prev(nullptr) {}
     ~Node()
     {
-        if (_data)
-            delete _data;
         if (_next)
             delete _next;
         if (_prev)
@@ -81,6 +79,7 @@ LinkedList<T>::~LinkedList<T>()
     {
         tmp = _head;
         _head = _head->_next;
+        tmp->_next = tmp->_prev = nullptr;
         delete tmp;
     }
     _head = nullptr;
