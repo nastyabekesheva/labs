@@ -6,9 +6,36 @@
 //
 
 #include <iostream>
+#include <queue>
+#include <stack>
 
 int main(int argc, const char * argv[]) {
-    // insert code here...
-    std::cout << "Hello, World!\n";
+    std::queue<int> stdq;
+
+    stdq.push(1);
+    stdq.push(2);
+    stdq.push(3);
+
+    while (!stdq.empty())
+    {
+        std::cout << stdq.front() << " ";
+        stdq.pop();
+    }
+    
+    std::cout << std::endl;
+
+    std::stack<int> stds;
+    stds.push(1);
+    stds.push(2);
+    stds.push(3);
+        
+    while (!stds.empty())
+    {
+        std::cout << stds.top() <<" ";
+        stds.pop();
+    }
+    
+    std::cout << std::endl;
+    
     return 0;
 }
