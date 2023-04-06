@@ -13,11 +13,13 @@
 template<typename T>
 struct Node
 {
-    T _data;
+    T* _data;
     Node* _next;
-    Node(T data): _data(data), _next(nullptr) {}
+    Node(T data): _data(new T(data)), _next(nullptr) {}
     ~Node()
     {
+        if (_data)
+            delete _data;
         if (_next)
             delete _next;
     }
@@ -47,8 +49,16 @@ public:
 template<typename T>
 Queue<T>::~Queue()
 {
+    Node<T>* node = _front;
+    while (node)
+    {
+        Node<T>* tmp = node->_next;
+        node = node->_next;
+        delete node;
+    }
     if (_front)
         delete _front; //    cleaning memory
+    
 }
 
 template<typename T>
@@ -81,7 +91,7 @@ T Queue<T>::deQueue()
     if (!_front)
         _rear = nullptr; //    if there's no front there's no rear
     
-    T data = tmp->_data; //    store data
+    T data = *(tmp->_data); //    store data
     tmp->_next = nullptr; //    unlink nodes
     delete tmp;
     
@@ -109,13 +119,14 @@ unsigned int Queue<T>::size() const
 template<typename T>
 std::ostream & operator << (std::ostream &out, const Queue<T> &q)
 {
+    out << "\u2500\u2192\u2500[ ";
     Node<T> *node = q._front;
     while (node) //    iterate through queue
     {
-        out << node->_data << ' '; //    print data
+        out << *(node->_data) << " "; //    print data
         node = node->_next;
     }
-    out << std::endl;
+    out << "]\u2500\u2192\u2500" << std::endl;
     return out;
 }
 
