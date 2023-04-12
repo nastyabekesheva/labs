@@ -46,9 +46,5 @@ BinarySearchTree<std::string>* vector_to_tree(std::vector<std::string> vec)
     return BST;
 }
 
-//int search_tree(BinarySearchTree<std::string>* BST, char ch)
-//{
-//    std::string
-//};
 
 

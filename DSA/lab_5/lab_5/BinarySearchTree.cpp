@@ -36,7 +36,6 @@ class BinarySearchTree
 {
 private:
     Node<T>* _root;
-//    unsigned int _size;
 public:
     BinarySearchTree(): _root(nullptr) {}
     ~BinarySearchTree<T>();
@@ -78,7 +77,7 @@ BinarySearchTree<T>::~BinarySearchTree()
 {
     if (_root)
     {
-        delete _root;
+        delete _root; //    cleaning memory
     }
 }
 
@@ -93,18 +92,18 @@ void BinarySearchTree<T>::inorder_tree_walk(Node<T>* node)
 {
     if (node)
     {
-        inorder_tree_walk(node->_left);
+        inorder_tree_walk(node->_left); //    recur on left child
         std::cout << *(node->_data) << " ";
-        inorder_tree_walk(node->_right);
+        inorder_tree_walk(node->_right); //    recur on right child
     }
 }
 
 template<typename T>
 void BinarySearchTree<T>::insert(T data)
 {
-    if (!_root)
+    if (!_root) //    if there is no root
     {
-        _root = new Node<T>(data);
+        _root = new Node<T>(data); //    create root
     }
     else
     {
@@ -115,26 +114,26 @@ void BinarySearchTree<T>::insert(T data)
 template<typename T>
 void BinarySearchTree<T>::insert(Node<T>* node, T data)
 {
-    if (data > *(node->_data))
+    if (data > *(node->_data)) //    if key is greater than node's key
     {
-        if (!node->_right)
+        if (!node->_right) //    if there is no a right child
         {
-            node->_right = new Node<T>(data, node);
+            node->_right = new Node<T>(data, node); //    insert node on the right
         }
         else
         {
-            insert(node->_right, data);
+            insert(node->_right, data); //    go further right
         }
     }
-    else if (data < *(node->_data))
+    else if (data < *(node->_data)) //    if key is less than node's key
     {
-        if (!node->_left)
+        if (!node->_left) //    if there is no a left child
         {
-            node->_left = new Node<T>(data, node);
+            node->_left = new Node<T>(data, node); //    insert node on the left
         }
         else
         {
-            insert(node->_left, data);
+            insert(node->_left, data); //    go further left
         }
     }
 }
@@ -148,15 +147,15 @@ Node<T>* BinarySearchTree<T>::search(T data)
 template<typename T>
 Node<T>* BinarySearchTree<T>::search(Node<T>* node, T data)
 {
-    while (node && data != *(node->_data))
+    while (node && data != *(node->_data)) //    while there is node and its key differs from what we need to find
     {
-        if (data < *(node->_data))
+        if (data < *(node->_data)) //    if key is less than node's key
         {
-            node = node->_left;
+            node = node->_left; //    go further left
         }
         else
         {
-            node = node->_right;
+            node = node->_right; //    go further right
         }
     }
     return node;
@@ -171,13 +170,13 @@ Node<T>* BinarySearchTree<T>::min()
 template<typename T>
 Node<T>* BinarySearchTree<T>::min(Node<T>* node)
 {
-    if(!node)
+    if(!node) //    just being cautious
     {
         node = _root;
     }
-    while (node->_left)
+    while (node->_left) //    while there is a left child
     {
-        node = node->_left;
+        node = node->_left; //    go further left
     }
     return node;
 }
@@ -191,9 +190,13 @@ Node<T>* BinarySearchTree<T>::max()
 template<typename T>
 Node<T>* BinarySearchTree<T>::max(Node<T>* node)
 {
-    while (node->_right)
+    if(!node) //    just being cautious
     {
-        node = node->_right;
+        node = _root;
+    }
+    while (node->_right) //    while there is a right child
+    {
+        node = node->_right; //    go further right
     }
     return node;
 }
@@ -207,14 +210,14 @@ Node<T>* BinarySearchTree<T>::successor(T data)
 template<typename T>
 Node<T>* BinarySearchTree<T>::successor(Node<T>* node)
 {
-    if (node->_right)
+    if (node->_right) //    if there is a right child
     {
         return min(node->_right);
     }
     Node<T>* tmp = node->_parent;
-    while (tmp && node == tmp->_right)
+    while (tmp && node == tmp->_right) //    while there is a parent to node and node is a right child
     {
-        node = tmp;
+        node = tmp; //    move nodes
         tmp = tmp->_parent;
     }
     return tmp;
@@ -229,14 +232,14 @@ Node<T>* BinarySearchTree<T>::predecessor(T data)
 template<typename T>
 Node<T>* BinarySearchTree<T>::predecessor(Node<T>* node)
 {
-    if (node->_left)
+    if (node->_left) //    if there is a left child
     {
-        return min(node->_rigth);
+        return max(node->_left);
     }
     Node<T>* tmp = node->_parent;
-    while (tmp && node == tmp->_left)
+    while (tmp && node == tmp->_left) //    while there is a parent to node and node is a left child
     {
-        node = tmp;
+        node = tmp; //    move nodes
         tmp = tmp->_parent;
     }
     return tmp;
@@ -253,9 +256,9 @@ void BinarySearchTree<T>::remove(Node<T>* node)
 {
     Node<T>* tmp1;
     Node<T>* tmp2;
-    if (_root)
+    if (_root) //    nothing to remove if there's no root
     {
-        if (!node->_left || !node->_right)
+        if (!node->_left || !node->_right) //    here we mark a node that is going to be deleted
         {
             tmp1 = node;
         }
@@ -264,7 +267,7 @@ void BinarySearchTree<T>::remove(Node<T>* node)
             tmp1 = successor(node);
         }
         
-        if (tmp1->_left)
+        if (tmp1->_left) //    here we mark a child of node that is going to be deleted
         {
             tmp2 = tmp1->_left;
         }
@@ -272,31 +275,31 @@ void BinarySearchTree<T>::remove(Node<T>* node)
         {
             tmp2 = tmp1->_right;
         }
-        if (tmp2)
+        if (tmp2) //    if there is a child
         {
-            tmp2->_parent = tmp1->_parent;
+            tmp2->_parent = tmp1->_parent; //    move parents
         }
-        if (!tmp1->_parent)
+        if (!tmp1->_parent) //    if node to be deleted is a root
         {
-            _root = tmp2;
+            _root = tmp2; //    its child becomes a root
         }
-        else if (tmp1 == tmp1->_parent->_left)
+        else if (tmp1 == tmp1->_parent->_left) //    if node to be deleted is a left child
         {
-            tmp1->_parent->_left = tmp2;
+            tmp1->_parent->_left = tmp2; //    move up its child left
         }
         else
         {
-            tmp1->_parent->_right = tmp2;
+            tmp1->_parent->_right = tmp2; //    move up its child right
         }
-        if (tmp1 != node)
+        if (tmp1 != node) //    if the node we removed is the 'node'
         {
-            T* tmp_data = node->_data;
+            T* tmp_data = node->_data; //    move keys
             node->_data = tmp1->_data;
             delete tmp_data;
             tmp1->_data = nullptr;
         }
-        tmp1->_right = tmp1->_left = nullptr;
-        delete tmp1;
+        tmp1->_right = tmp1->_left = nullptr; //    unbind nodes
+        delete tmp1; //    actually delete node
     }
     
 }
@@ -316,10 +319,10 @@ int BinarySearchTree<T>::height(Node<T>* node)
     }
     else
     {
-        int h_left = height(node->_left);
-        int h_right = height(node->_right);
+        int h_left = height(node->_left); //    find height of left child
+        int h_right = height(node->_right); //    find height of right child
         
-        if (h_left >= h_right)
+        if (h_left >= h_right) // use the larger child
         {
             return h_left+1;
         }
@@ -329,6 +332,8 @@ int BinarySearchTree<T>::height(Node<T>* node)
         }
     }
 }
+
+/*          That's just visualization magic          */
 
 template<typename T>
 void BinarySearchTree<T>::display()
@@ -357,6 +362,8 @@ void BinarySearchTree<T>::display(std::string str, Node<T>* node, bool is_left)
     }
 }
 
+/*          Magic ends here          */
+
 
 template<typename T>
 int BinarySearchTree<T>::search_char(char data)
@@ -367,21 +374,21 @@ int BinarySearchTree<T>::search_char(char data)
 template<typename T>
 int BinarySearchTree<T>::search_char(Node<T>* node, char data)
 {
-    if(!node)
+    if(!node) //    if there is no root...
     {
         return 0;
     }
-    if((*node->_data)[0] < data)
+    if((*node->_data)[0] < data) //    if key's first char less than data
     {
-        return search_char(node->_right, data);
+        return search_char(node->_right, data); //    go right
     }
-    else if((*node->_data)[0] > data)
+    else if((*node->_data)[0] > data) //    if key's first char greater than data
     {
-        return search_char(node->_left, data);
+        return search_char(node->_left, data); //    go left
     }
     else
     {
-        return 1 + search_char(node->_right, data) + search_char(node->_left, data);
+        return 1 + search_char(node->_right, data) + search_char(node->_left, data); //    we found one key, lets try to find some more!
     }
 }
 
@@ -394,26 +401,28 @@ void BinarySearchTree<T>::remove_char(char data)
 template<typename T>
 void BinarySearchTree<T>::remove_char(Node<T>* node, char data)
 {
-    if (!node)
+    if (!node) //    if there is no root...
     {
         return;
     }
-    if ((*node->_data)[0] < data)
+    if ((*node->_data)[0] < data) //    if key's first char less than data
     {
-        remove_char(node->_right, data);
+        remove_char(node->_right, data); //    go right
     }
-    else if ((*node->_data)[0] > data)
+    else if ((*node->_data)[0] > data) //    if key's first char greater than data
     {
-        remove_char(node->_left, data);
+        remove_char(node->_left, data); //    go left
     }
     else
     {
         Node<T>* tmp = node->_parent;
-        remove(node);
-        remove_char(tmp, data);
+        remove(node); //    remove what we found
+        remove_char(tmp, data); //    lets try to remove more nodes
         
     }
 }
+
+/*          More magic          */
 
 template<typename T>
 std::ostream & operator << (std::ostream &out, const BinarySearchTree<T> &tree)
@@ -426,11 +435,11 @@ std::ostream & display(std::ostream &out, std::string str, Node<T>* node, bool i
 {
     if (node != nullptr)
     {
-        out << str;
-        out << (is_left ? "├──" : "└──" );
-        out << *(node->_data) << std::endl;
-        display(out, str + (is_left ? "│   " : "    "), node->_left, true);
-        display(out, str + (is_left ? "│   " : "    "), node->_right, false);
+        out << str; //    that's like a prefix of sorts
+        out << (is_left ? "├──" : "└──" ); //    if the node is a left child
+        out << *(node->_data) << std::endl; //    that's our data
+        display(out, str + (is_left ? "│   " : "    "), node->_left, true); //    print left child
+        display(out, str + (is_left ? "│   " : "    "), node->_right, false); //    print right child
     }
     return out;
 }
@@ -440,10 +449,10 @@ std::istream & operator >> (std::istream &in, BinarySearchTree<T> &tree)
 {
 
     std::string tmp;
-    while (tmp != "/~")
+    while (tmp != "/~") //    just a way to stop stream
     {
         in >> tmp;
-        if (tmp != "/~")
+        if (tmp != "/~") //    we don't want to inser "/~" into tree
         {
             std::istringstream iss(tmp);
             T f;
@@ -453,3 +462,5 @@ std::istream & operator >> (std::istream &in, BinarySearchTree<T> &tree)
     }
     return in;
 }
+
+/*          Magic ends here          */
