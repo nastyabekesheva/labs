@@ -39,7 +39,7 @@ private:
 //    unsigned int _size;
 public:
     BinarySearchTree(): _root(nullptr) {}
-//    ~BinarySearchTree<T>();
+    ~BinarySearchTree<T>();
     void insert(T data);
     void insert(Node<T>* root, T data);
     void inorder_tree_walk();
@@ -61,15 +61,26 @@ public:
     void display();
     void display(Node<T>* node);
     void display(std::string str, Node<T>* node, bool is_left);
-//    template<typename U>
-//    friend std::ostream & operator << (std::ostream &out, const BinarySearchTree<U> &tree);
-//    template<typename U>
-//    friend std::istream & operator >> (std::istream &in,  BinarySearchTree<T> &tree);
+    template<typename U>
+    friend std::ostream & operator << (std::ostream &out, const BinarySearchTree<U> &tree);
+    template<typename U>
+    friend std::ostream & display(std::ostream &out, std::string str, Node<T>* node, bool is_left);
+    template<typename U>
+    friend std::istream & operator >> (std::istream &in,  BinarySearchTree<T> &tree);
     int search_char(char data);
     int search_char(Node<T>* node, char data);
     void remove_char(char data);
     void remove_char(Node<T>* node, char data);
 };
+
+template<typename T>
+BinarySearchTree<T>::~BinarySearchTree()
+{
+    if (_root)
+    {
+        delete _root;
+    }
+}
 
 template<typename T>
 void BinarySearchTree<T>::inorder_tree_walk()
@@ -402,4 +413,43 @@ void BinarySearchTree<T>::remove_char(Node<T>* node, char data)
         remove_char(tmp, data);
         
     }
+}
+
+template<typename T>
+std::ostream & operator << (std::ostream &out, const BinarySearchTree<T> &tree)
+{
+    return display(out, "", tree._root, false);
+}
+
+template<typename T>
+std::ostream & display(std::ostream &out, std::string str, Node<T>* node, bool is_left)
+{
+    if (node != nullptr)
+    {
+        out << str;
+        out << (is_left ? "├──" : "└──" );
+        out << *(node->_data) << std::endl;
+        display(out, str + (is_left ? "│   " : "    "), node->_left, true);
+        display(out, str + (is_left ? "│   " : "    "), node->_right, false);
+    }
+    return out;
+}
+
+template<typename T>
+std::istream & operator >> (std::istream &in, BinarySearchTree<T> &tree)
+{
+
+    std::string tmp;
+    while (tmp != "/~")
+    {
+        in >> tmp;
+        if (tmp != "/~")
+        {
+            std::istringstream iss(tmp);
+            T f;
+            iss >> std::noskipws >> f;
+            tree.insert(f);
+        }
+    }
+    return in;
 }

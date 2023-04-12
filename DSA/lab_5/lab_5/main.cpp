@@ -17,9 +17,13 @@ int main(int argc, const char * argv[]) {
     std::cout << file_contents << std::endl;
     std::vector<std::string> vec_data = string_to_vector(file_contents);
     BinarySearchTree<std::string>* tree = vector_to_tree(vec_data);
-    tree->display();
-    std::cout  << tree->search_char('w') << std::endl;
+    std::cout << *(tree);
+    std::cout  << "Amount of words that start with char 'w' in file: " << tree->search_char('w') << std::endl;
     tree->remove_char('w');
-    tree->display();
+    std::cout << *(tree);
+    std::cout << *(tree);
+//    BinarySearchTree<std::string> BST;
+//    std::cin >> BST;
+//    std::cout << BST;
     return 0;
 }
