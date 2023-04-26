@@ -29,6 +29,7 @@ int main(int argc, const char * argv[]) {
     wg.remove_node(n4);
     wg.print_adj_matrix();
     wg.add_node(n4);
+    wg.add_node(4);
     wg.add_edge(e4);
     wg.add_edge(e5);
     wg.print_adj_matrix();

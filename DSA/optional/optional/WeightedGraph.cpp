@@ -16,13 +16,48 @@
 template<typename T>
 struct Node
 {
-    T* _data;
-    Node(T data): _data(new T(data)) {}
-    ~Node()
+    std::shared_ptr<T> _data;
+    Node(T data)
     {
-        if (_data)
-            delete _data;
+//        int* p = (T*)malloc(sizeof(T));
+//        if (p != nullptr)
+//        {
+//            *p = data;
+//        }
+//        _data = p;
+        _data = std::make_shared<T>(data);
     }
+    Node(const Node &node)
+    {
+        _data = node._data;
+    }
+    Node(Node && node)
+    {
+        T* tmp = node._data;
+        node._data = _data;
+        _data = tmp;
+    }
+    Node& operator=(const Node & node)
+    {
+        _data = node._data;
+    }
+    Node& operator=(Node && node)
+    {
+        T* tmp = node._data;
+        node._data = _data;
+        _data = tmp;
+    }
+    ~Node() = default;
+//    ~Node()
+//    {
+//        if (_data != nullptr)
+//        {
+////            _data = nullptr;
+//            delete _data;
+//            _data = nullptr;
+//        }
+//
+//    }
 };
 
 //template<typename T>
@@ -76,19 +111,68 @@ bool operator!= (const Node<T1>& lhs, const Node<T2>& rhs)
 template<typename T>
 struct Edge
 {
-    Node<T>* _start;
-    Node<T>* _end;
+    std::shared_ptr<Node<T>> _start;
+    std::shared_ptr<Node<T>> _end;
     int _weight;
     Edge(): _start(nullptr), _end(nullptr), _weight(0) {}
-    Edge(Node<T>* start, Node<T>* end, int weight): _start(start), _end(end), _weight(weight) {}
-    
-//    ~Edge()
-//    {
-//        if (_start)
-//            delete _start;
-//        if (_end)
-//            delete _end;
-//    }
+    Edge(Node<T>* start, Node<T>* end, int weight = 0): _start(start), _end(end), _weight(weight) {}
+    Edge(T start, T end, int weight = 0)
+    {
+        Node<T>* start_node = new Node<T>(start);
+        Node<T>* end_node = new Node<T>(end);
+        _start = start_node;
+        _end = end_node;
+        _weight = weight;
+    }
+    Edge(const Edge &edge)
+    {
+        _start = edge._start;
+        _end = edge._end;
+        _weight = edge._weight;
+    }
+    Edge(Edge && edge)
+    {
+        Node<T>* tmp1 = edge._start;
+        Node<T>* tmp2 = edge._end;
+        int tmp3 = edge._weight;
+        edge._start = _start;
+        _start = tmp1;
+        edge._end = _end;
+        _end = tmp2;
+        edge._weight = _weight;
+        _weight = tmp3;
+    }
+    Edge& operator=(const Edge & edge)
+    {
+        _start = edge._start;
+        _end = edge._end;
+        _weight = edge._weight;
+    }
+    Edge& operator=(Edge && edge)
+    {
+        Node<T>* tmp1 = edge._start;
+        Node<T>* tmp2 = edge._end;
+        int tmp3 = edge._weight;
+        edge._start = _start;
+        _start = tmp1;
+        edge._end = _end;
+        _end = tmp2;
+        edge._weight = _weight;
+        _weight = tmp3;
+    }
+    ~Edge()
+    {
+        if (_start->_data)
+        {
+            delete _start;
+            _start = nullptr;
+        }
+        if (_end->_data)
+        {
+            delete _end;
+            _end = nullptr;
+        }
+    }
 };
 
 template<typename T>
@@ -108,7 +192,11 @@ private:
 public:
     WeightedGraph(): _vertices({}), _edges({}), _adj_matrix({{}}), _num_edges(0) {}
     WeightedGraph(std::vector<Node<T>*> vertecies, std::vector<Edge<T>*> edges = {});
-//    ~WeightedGraph();
+    ~WeightedGraph();
+    WeightedGraph(const WeightedGraph & wg);
+    WeightedGraph(WeightedGraph && wg);
+    WeightedGraph& operator=(const WeightedGraph & wg);
+    WeightedGraph& operator=(WeightedGraph && wg);
     void print_adj_matrix();
     void print_adj_lists();
     void add_node(Node<T>* node);
@@ -121,6 +209,15 @@ public:
     std::vector<Node<T>*> BFS(Node<T>* start);
     
 };
+
+template<typename T>
+WeightedGraph<T>::~WeightedGraph()
+{
+    for (Edge<T>* edge : _edges)
+    {
+        delete edge;
+    }
+}
 
 template<typename T>
 bool WeightedGraph<T>::is_an_edge(Node<T>* vertex1, Node<T>* vertex2)
@@ -267,6 +364,14 @@ void WeightedGraph<T>::add_node(Node<T>* node)
 }
 
 template<typename T>
+void WeightedGraph<T>::add_node(T data)
+{
+    Node<T>* tmp = new Node<T>(data);
+    add_node(tmp);
+//    delete tmp;
+}
+
+template<typename T>
 void WeightedGraph<T>::remove_node(Node<T>* node)
 {
     if (std::find(_vertices.begin(), _vertices.end(), node) != _vertices.end())
@@ -295,6 +400,14 @@ void WeightedGraph<T>::remove_edge(Edge<T>* edge)
 template<typename T>
 void WeightedGraph<T>::add_edge(Edge<T>* edge)
 {
+    if (edge->_start && (std::find(_vertices.begin(), _vertices.end(), edge->_start) != _vertices.end()))
+    {
+        _vertices.push_back(edge->_start);
+    }
+    if (edge->_end && (std::find(_vertices.begin(), _vertices.end(), edge->_end) != _vertices.end()))
+    {
+        _vertices.push_back(edge->_end);
+    }
     if (edge && !(std::find(_edges.begin(), _edges.end(), edge) != _edges.end()))
     {
         _edges.push_back(edge);
@@ -302,6 +415,14 @@ void WeightedGraph<T>::add_edge(Edge<T>* edge)
         make_matrix();
         make_lists();
     }
+}
+
+template<typename T>
+void WeightedGraph<T>::add_edge(T start, T end, int weight)
+{
+    Edge<T>* tmp = new Edge<T>(start, end, weight);
+    add_edge(tmp);
+//    delete tmp;
 }
 
 template<typename T>
