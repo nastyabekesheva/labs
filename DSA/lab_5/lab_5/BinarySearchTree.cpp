@@ -9,6 +9,7 @@
 #include <iostream>
 #include <string>
 #include <vector>
+#include <queue>
 #include <sstream>
 
 template<typename T>
@@ -226,7 +227,7 @@ Node<T>* BinarySearchTree<T>::successor(Node<T>* node)
 template<typename T>
 Node<T>* BinarySearchTree<T>::predecessor(T data)
 {
-    return successor(search(data));
+    return predecessor(search(data));
 }
 
 template<typename T>
@@ -447,12 +448,12 @@ std::ostream & display(std::ostream &out, std::string str, Node<T>* node, bool i
 template<typename T>
 std::istream & operator >> (std::istream &in, BinarySearchTree<T> &tree)
 {
-
+    std::cout << std::endl << "Enter data, to stop enter '/~':" << std::endl;
     std::string tmp;
     while (tmp != "/~") //    just a way to stop stream
     {
         in >> tmp;
-        if (tmp != "/~") //    we don't want to inser "/~" into tree
+        if (tmp != "/~") //    we don't want to insert "/~" into tree
         {
             std::istringstream iss(tmp);
             T f;
@@ -464,3 +465,4 @@ std::istream & operator >> (std::istream &in, BinarySearchTree<T> &tree)
 }
 
 /*          Magic ends here          */
+
