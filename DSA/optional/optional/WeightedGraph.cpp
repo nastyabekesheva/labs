@@ -19,12 +19,6 @@ struct Node
     std::shared_ptr<T> _data;
     Node(T data)
     {
-//        int* p = (T*)malloc(sizeof(T));
-//        if (p != nullptr)
-//        {
-//            *p = data;
-//        }
-//        _data = p;
         _data = std::make_shared<T>(data);
     }
     Node(const Node &node)
@@ -50,21 +44,10 @@ struct Node
     ~Node() = default;
 };
 
-//template<typename T>
-//std::ostream& operator<<(std::ostream& os, const Node<T>& node) {
-//    os << (node->_data);
-//    return os;
-//}
-//
-//template<typename T>
-//std::ostream& operator<<(std::ostream& os, const Node<T> node) {
-//    os << *(node._data);
-//    return os;
-//}
 
 template<typename T>
-std::ostream& operator<<(std::ostream& os, const std::shared_ptr<Node<int>> node) {
-    os << *(node->_data);
+std::ostream& operator<<(std::ostream& os, const Node<int> node) {
+    os << *(node._data);
     return os;
 }
 
@@ -157,7 +140,27 @@ struct Edge
         _weight = tmp3;
     }
     ~Edge() = default;
+    bool operator<(const Edge& other) const
+    {
+        return _weight < other._weight;
+    }
+    bool operator>(const Edge& other) const
+    {
+        return _weight > other._weight;
+    }
 };
+
+//template<typename T1, typename T2>
+//bool operator< (const Edge<T1> lhs, const Edge<T2> rhs)
+//{
+//    return *(lhs._weight) < *(rhs._weight);
+//}
+//
+//template<typename T1, typename T2>
+//bool operator> (const Edge<T1>& lhs, const Edge<T2>& rhs)
+//{
+//    return *(lhs._weight) > *(rhs._weight);
+//}
 
 template<typename T>
 class WeightedGraph
@@ -173,10 +176,13 @@ private:
     void make_lists();
     bool is_an_edge(std::shared_ptr<Node<T>> vertex1, std::shared_ptr<Node<T>> vertex2);
     std::shared_ptr<Edge<T>> find_edge(std::shared_ptr<Node<T>> vertex1, std::shared_ptr<Node<T>> vertex2);
+    int partition(int low, int high);
+    void quick_sort(int low, int high);
+    void sort_by_weight();
 public:
     WeightedGraph(): _vertices({}), _edges({}), _adj_matrix({{}}), _num_edges(0) {}
     WeightedGraph(std::vector<std::shared_ptr<Node<T>>> vertecies, std::vector<std::shared_ptr<Edge<T>>> edges = {});
-    ~WeightedGraph();
+    ~WeightedGraph() = default;
     WeightedGraph(const WeightedGraph & wg);
     WeightedGraph(WeightedGraph && wg);
     WeightedGraph& operator=(const WeightedGraph & wg);
@@ -191,17 +197,10 @@ public:
     void remove_edge(std::shared_ptr<Edge<T>> edge);
     std::vector<std::shared_ptr<Node<T>>> DFS(std::shared_ptr<Node<T>> start);
     std::vector<std::shared_ptr<Node<T>>> BFS(std::shared_ptr<Node<T>> start);
+    std::vector<std::shared_ptr<Edge<T>>> kruskal();
     
 };
 
-template<typename T>
-WeightedGraph<T>::~WeightedGraph()
-{
-//    for (std::shared_ptr<Edge<T>> edge : _edges)
-//    {
-//        delete edge;
-//    }
-}
 
 template<typename T>
 bool WeightedGraph<T>::is_an_edge(std::shared_ptr<Node<T>> vertex1, std::shared_ptr<Node<T>> vertex2)
@@ -489,4 +488,51 @@ std::vector<std::shared_ptr<Node<T>>> WeightedGraph<T>::DFS(std::shared_ptr<Node
     
     return dfs;
 }
+
+/*          based on quicksort          */
+
+template<typename T>
+int WeightedGraph<T>::partition(int low, int high)
+{
+    std::shared_ptr<Edge<T>> pivot = _edges[high];
+    int i = (low - 1);
+    
+    for (int j = low; j <= high-1; j++)
+    {
+        if (*_edges[j] < *pivot)
+        {
+            i++;
+            std::swap(_edges[i], _edges[j]);
+        }
+    }
+    
+    std::swap(_edges[i + 1], _edges[high]);
+    return (i + 1);
+}
+
+template<typename T>
+void WeightedGraph<T>::quick_sort(int low, int high)
+{
+    if (low < high)
+    {
+        int pi = partition(low, high);
+        
+        quick_sort(low, pi-1);
+        quick_sort(pi+1, high);
+    }
+}
+
+template<typename T>
+void WeightedGraph<T>::sort_by_weight()
+{
+    quick_sort(0, _num_edges-1);
+}
+
+template<typename T>
+std::vector<std::shared_ptr<Edge<T>>> WeightedGraph<T>::kruskal()
+{
+    sort_by_weight();
+    return _edges;
+}
+
 

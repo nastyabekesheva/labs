@@ -35,6 +35,10 @@ int main(int argc, const char * argv[]) {
     wg.print_adj_lists();
     wg.BFS(n0);
     wg.DFS(n0);
-    std::cout << *n0.get()->_data;
+//    Node<int> n = *n0;
+//    Edge<int> ee1 = *e1;
+//    Edge<int> ee2 = *e2;
+    std::cout << (*e1 < *e2);
+    wg.kruskal();
     return 0;
 }
