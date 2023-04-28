@@ -556,9 +556,15 @@ std::vector<std::shared_ptr<Edge<T>>> WeightedGraph<T>::kruskal()
 {
     std::cout << std::endl;
     sort_by_weight();
-    std::vector<std::shared_ptr<Edge<T>>> edges_to_be_sorted = _edges; // probably better to use queue but whatever
     std::vector<std::shared_ptr<Edge<T>>> forest;
     std::vector<std::vector<std::shared_ptr<Node<T>>>> trees;
+    
+    std::queue<std::shared_ptr<Edge<T>>> edges_to_be_sorted;
+    
+    for (auto& edge : _edges)
+    {
+        edges_to_be_sorted.push(edge);
+    }
 
     for (int i = 0; i < _num_vertices; i++)
     {
@@ -568,8 +574,8 @@ std::vector<std::shared_ptr<Edge<T>>> WeightedGraph<T>::kruskal()
     
     while (!edges_to_be_sorted.empty() && (trees[0].size() != _num_vertices))
     {
-        std::shared_ptr<Edge<T>> edge_poped = edges_to_be_sorted[0];
-        edges_to_be_sorted.erase(edges_to_be_sorted.begin());
+        std::shared_ptr<Edge<T>> edge_poped = edges_to_be_sorted.front();
+        edges_to_be_sorted.pop();
         
         int i, j;
         
@@ -579,7 +585,6 @@ std::vector<std::shared_ptr<Edge<T>>> WeightedGraph<T>::kruskal()
         if (i != j)
         {
             forest.push_back(edge_poped);
-//            std::cout << "(" << *edge_poped->_start->_data << ", " << *edge_poped->_end->_data << ", " << edge_poped->_weight << ")" << std::endl;
             std::cout << *edge_poped << std::endl;
             merge_trees(trees, i, j);
         }
