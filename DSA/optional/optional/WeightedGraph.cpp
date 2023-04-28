@@ -150,17 +150,11 @@ struct Edge
     }
 };
 
-//template<typename T1, typename T2>
-//bool operator< (const Edge<T1> lhs, const Edge<T2> rhs)
-//{
-//    return *(lhs._weight) < *(rhs._weight);
-//}
-//
-//template<typename T1, typename T2>
-//bool operator> (const Edge<T1>& lhs, const Edge<T2>& rhs)
-//{
-//    return *(lhs._weight) > *(rhs._weight);
-//}
+template<typename T>
+std::ostream& operator<<(std::ostream& os, const Edge<T>& s) {
+    os << "(" << *s._start->_data << ", " << *s._end->_data << ", " << s._weight << ")";
+    return os;
+}
 
 template<typename T>
 class WeightedGraph
@@ -179,6 +173,8 @@ private:
     int partition(int low, int high);
     void quick_sort(int low, int high);
     void sort_by_weight();
+    int get_tree_index(std::vector<std::vector<std::shared_ptr<Node<T>>>>&, std::shared_ptr<Node<T>>);
+    void merge_trees(std::vector<std::vector<std::shared_ptr<Node<T>>>>& tree, int t_i, int t_j);
 public:
     WeightedGraph(): _vertices({}), _edges({}), _adj_matrix({{}}), _num_edges(0) {}
     WeightedGraph(std::vector<std::shared_ptr<Node<T>>> vertecies, std::vector<std::shared_ptr<Edge<T>>> edges = {});
@@ -351,7 +347,6 @@ void WeightedGraph<T>::add_node(T data)
 {
     std::shared_ptr<Node<T>> tmp = std::make_shared<Node<T>>(data);
     add_node(tmp);
-//    delete tmp;
 }
 
 template<typename T>
@@ -364,7 +359,6 @@ void WeightedGraph<T>::remove_node(std::shared_ptr<Node<T>> node)
         {
             if (edge->_start == node || edge->_end == node)
                 to_be_removed.push_back(edge);
-//                remove_edge(edge);
         }
         _num_vertices--;
     }
@@ -529,10 +523,69 @@ void WeightedGraph<T>::sort_by_weight()
 }
 
 template<typename T>
+int  WeightedGraph<T>::get_tree_index(std::vector<std::vector<std::shared_ptr<Node<T>>>>& tree, std::shared_ptr<Node<T>> node)
+{
+    int i;
+    
+    for (int j = 0; j < tree.size(); j++)
+    {
+        if (std::find(tree[j].begin(), tree[j].end(), node) != tree[j].end())
+        {
+            i = j;
+        }
+    }
+    
+    return i;
+}
+
+template<typename T>
+void WeightedGraph<T>::merge_trees(std::vector<std::vector<std::shared_ptr<Node<T>>>>& tree, int t_i, int t_j)
+{
+    if (t_i != t_j)
+    {
+        tree[t_i].insert(tree[t_i].end(), tree[t_j].begin(), tree[t_j].end());
+        tree.erase(tree.begin() + t_j);
+    }
+    
+}
+
+
+
+template<typename T>
 std::vector<std::shared_ptr<Edge<T>>> WeightedGraph<T>::kruskal()
 {
+    std::cout << std::endl;
     sort_by_weight();
-    return _edges;
+    std::vector<std::shared_ptr<Edge<T>>> edges_to_be_sorted = _edges; // probably better to use queue but whatever
+    std::vector<std::shared_ptr<Edge<T>>> forest;
+    std::vector<std::vector<std::shared_ptr<Node<T>>>> trees;
+
+    for (int i = 0; i < _num_vertices; i++)
+    {
+        trees.push_back(std::vector<std::shared_ptr<Node<T>>>());
+        trees[i].push_back(_vertices[i]);
+    }
+    
+    while (!edges_to_be_sorted.empty() && (trees[0].size() != _num_vertices))
+    {
+        std::shared_ptr<Edge<T>> edge_poped = edges_to_be_sorted[0];
+        edges_to_be_sorted.erase(edges_to_be_sorted.begin());
+        
+        int i, j;
+        
+        i = get_tree_index(trees, edge_poped->_start);
+        j = get_tree_index(trees, edge_poped->_end);
+        
+        if (i != j)
+        {
+            forest.push_back(edge_poped);
+//            std::cout << "(" << *edge_poped->_start->_data << ", " << *edge_poped->_end->_data << ", " << edge_poped->_weight << ")" << std::endl;
+            std::cout << *edge_poped << std::endl;
+            merge_trees(trees, i, j);
+        }
+    }
+    
+    return forest;
 }
 
 
