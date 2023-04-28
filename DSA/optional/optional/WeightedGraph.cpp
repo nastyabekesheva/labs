@@ -42,50 +42,39 @@ struct Node
         _data = tmp;
     }
     ~Node() = default;
+    bool operator<(const Node& other) const
+    {
+        return *_data < *other._data;
+    }
+    bool operator>(const Node& other) const
+    {
+        return *_data > *other._data;
+    }
+    bool operator<=(const Node& other) const
+    {
+        return *_data <= *other._data;
+    }
+    bool operator>=(const Node& other) const
+    {
+        return *_data >= *other._data;
+    }
+    bool operator==(const Node& other) const
+    {
+        return *_data == *other._data;
+    }
+    bool operator!=(const Node& other) const
+    {
+        return *_data != *other._data;
+    }
 };
 
 
 template<typename T>
-std::ostream& operator<<(std::ostream& os, const Node<int> node) {
-    os << *(node._data);
-    return os;
+std::ostream& operator<<(std::ostream& out, const Node<T> node) {
+    out << *(node._data);
+    return out;
 }
 
-template<typename T1, typename T2>
-bool operator< (const Node<T1>& lhs, const Node<T2>& rhs)
-{
-    return *(lhs._data) < *(rhs._data);
-}
-
-template<typename T1, typename T2>
-bool operator> (const Node<T1>& lhs, const Node<T2>& rhs)
-{
-    return *(lhs._data) > *(rhs._data);
-}
-
-template<typename T1, typename T2>
-bool operator<= (const Node<T1>& lhs, const Node<T2>& rhs)
-{
-    return *(lhs._data) <= *(rhs._data);
-}
-
-template<typename T1, typename T2>
-bool operator>= (const Node<T1>& lhs, const Node<T2>& rhs)
-{
-    return *(lhs._data) >= *(rhs._data);
-}
-
-template<typename T1, typename T2>
-bool operator== (const Node<T1>& lhs, const Node<T2>& rhs)
-{
-    return *(lhs._data) == *(rhs._data);
-}
-
-template<typename T1, typename T2>
-bool operator!= (const Node<T1>& lhs, const Node<T2>& rhs)
-{
-    return *(lhs._data) == *(rhs._data);
-}
 
 template<typename T>
 struct Edge
@@ -148,12 +137,28 @@ struct Edge
     {
         return _weight > other._weight;
     }
+    bool operator<=(const Edge& other) const
+    {
+        return _weight <= other._weight;
+    }
+    bool operator>=(const Edge& other) const
+    {
+        return _weight >= other._weight;
+    }
+    bool operator==(const Edge& other) const
+    {
+        return _weight == other._weight;
+    }
+    bool operator!=(const Edge& other) const
+    {
+        return _weight != other._weight;
+    }
 };
 
 template<typename T>
-std::ostream& operator<<(std::ostream& os, const Edge<T>& s) {
-    os << "(" << *s._start->_data << ", " << *s._end->_data << ", " << s._weight << ")";
-    return os;
+std::ostream& operator<<(std::ostream& out, const Edge<T>& edge) {
+    out << "(" << *edge._start->_data << ", " << *edge._end->_data << ", " << edge._weight << ")";
+    return out;
 }
 
 template<typename T>
@@ -405,7 +410,6 @@ void WeightedGraph<T>::add_edge(T start, T end, int weight)
 {
     std::shared_ptr<Edge<T>> tmp = new Edge<T>(start, end, weight);
     add_edge(tmp);
-//    delete tmp;
 }
 
 template<typename T>
