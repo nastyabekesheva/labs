@@ -38,11 +38,10 @@ int main(int argc, const char * argv[]) {
 //    Node<int> n = *n0;
 //    Edge<int> ee1 = *e1;
 //    Edge<int> ee2 = *e2;
-    std::cout << (*e1);
+    std::cout << "Kruskal:" << std::endl;
     wg.kruskal();
-    for (int i =0 ; i<5;i++)
-    {
-        std::cout << i;
-    }
+    std::cout << "Prim:" << std::endl;
+    wg.prim();
+
     return 0;
 }

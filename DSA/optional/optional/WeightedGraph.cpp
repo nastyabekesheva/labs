@@ -12,6 +12,10 @@
 #include <algorithm>
 #include <queue>
 #include <stack>
+#include <set>
+#include <map>
+
+#define INF std::numeric_limits<int>::max()
 
 template<typename T>
 struct Node
@@ -198,7 +202,8 @@ public:
     void remove_edge(std::shared_ptr<Edge<T>> edge);
     std::vector<std::shared_ptr<Node<T>>> DFS(std::shared_ptr<Node<T>> start);
     std::vector<std::shared_ptr<Node<T>>> BFS(std::shared_ptr<Node<T>> start);
-    std::vector<std::shared_ptr<Edge<T>>> kruskal();
+    std::set<std::shared_ptr<Edge<T>>> kruskal();
+    std::set<std::shared_ptr<Edge<T>>> prim();
     
 };
 
@@ -556,11 +561,11 @@ void WeightedGraph<T>::merge_trees(std::vector<std::vector<std::shared_ptr<Node<
 
 
 template<typename T>
-std::vector<std::shared_ptr<Edge<T>>> WeightedGraph<T>::kruskal()
+std::set<std::shared_ptr<Edge<T>>> WeightedGraph<T>::kruskal()
 {
     std::cout << std::endl;
     sort_by_weight();
-    std::vector<std::shared_ptr<Edge<T>>> forest;
+    std::set<std::shared_ptr<Edge<T>>> forest;
     std::vector<std::vector<std::shared_ptr<Node<T>>>> trees;
     
     std::queue<std::shared_ptr<Edge<T>>> edges_to_be_sorted;
@@ -588,7 +593,7 @@ std::vector<std::shared_ptr<Edge<T>>> WeightedGraph<T>::kruskal()
         
         if (i != j)
         {
-            forest.push_back(edge_poped);
+            forest.insert(edge_poped);
             std::cout << *edge_poped << std::endl;
             merge_trees(trees, i, j);
         }
@@ -597,4 +602,87 @@ std::vector<std::shared_ptr<Edge<T>>> WeightedGraph<T>::kruskal()
     return forest;
 }
 
+//template<typename T>
+//std::set<std::shared_ptr<Edge<T>>> WeightedGraph<T>::prim()
+//{
+//    std::set<std::shared_ptr<Node<T>>> visited;
+////    std::vector<std::shared_ptr<Node<T>>> visited;
+//    visited.insert(_vertices[0]);
+//    std::set<std::shared_ptr<Edge<T>>> forest;
+//
+//    while (visited.size() != _vertices.size())
+//    {
+//        int min = INF;
+//        std::shared_ptr<Edge<T>> edge;
+//        std::shared_ptr<Node<T>> new_node;
+//        for (std::shared_ptr<Node<T>> node : _vertices)
+//        {
+//            if (std::find(visited.begin(), visited.end(), node) != visited.end())
+//            {
+//                for (std::shared_ptr<Node<T>> adj_node : _adj_lists[std::distance(_vertices.begin(), std::find(_vertices.begin(), _vertices.end(), node))])
+//                {
+//                    if ((std::find(_vertices.begin(), _vertices.end(), adj_node) != _vertices.end()) && !(std::find(visited.begin(), visited.end(), adj_node) != visited.end()))
+//                    {
+//                        edge = find_edge(node, adj_node);
+//                        if (min > edge->_weight)
+//                        {
+//                            min = edge->_weight;
+//                            new_node = adj_node;
+//                        }
+//                    }
+//                }
+//            }
+//        }
+//        visited.insert(new_node);
+//        forest.insert(edge);
+//        std::cout << *edge << std::endl;
+//    }
+//    return forest;
+//}
+
+
+template<typename T>
+std::set<std::shared_ptr<Edge<T>>> WeightedGraph<T>::prim()
+{
+    std::map<std::shared_ptr<Node<T>>, int> key;
+    std::map<std::shared_ptr<Node<T>>, std::shared_ptr<Node<T>>> parent;
+    std::map<std::shared_ptr<Node<T>>, bool> in_tree;
+    std::set<std::shared_ptr<Edge<T>>> tree;
+    std::priority_queue<std::pair<std::shared_ptr<Node<T>>, int>, std::vector <std::pair<std::shared_ptr<Node<T>>, int>>, std::greater<std::pair<std::shared_ptr<Node<T>>, int>>> pq;
+
+    for (std::shared_ptr<Node<T>> node : _vertices)
+    {
+        parent[node] = nullptr;
+        in_tree[node] =  false;
+        key[node] =  INF;
+    }
+    
+    pq.push(std::make_pair(_vertices[0], 0));
+    
+    key[_vertices[0]] = 0;
+
+    while (!pq.empty())
+    {
+        std::shared_ptr<Node<T>> node =  pq.top().first;
+        pq.pop();
+        
+        if (in_tree[node] == true)
+            continue;
+        
+        in_tree[node] = true;
+        
+        for (std::shared_ptr<Node<T>> adj_node : _adj_lists[std::distance(_vertices.begin(), std::find(_vertices.begin(), _vertices.end(), node))])
+        {
+            std::shared_ptr<Edge<T>> edge = find_edge(node, adj_node);
+            if (in_tree[adj_node] == false && key[adj_node] > edge->_weight)
+            {
+                key[adj_node] = edge->_weight;
+                pq.push(std::make_pair(adj_node, key[adj_node]));
+                parent[adj_node] = node;
+                std::cout << *edge << std::endl;
+            }
+        }
+
+    return tree;
+}
 
