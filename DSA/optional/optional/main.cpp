@@ -8,7 +8,8 @@
 #include <iostream>
 #include "WeightedGraph.cpp"
 
-int main(int argc, const char * argv[]) {
+int main(int argc, const char * argv[])
+{
     // insert code here...
     std::shared_ptr<Node<int>> n0 = std::make_shared<Node<int>>(0);
     std::shared_ptr<Node<int>> n1 = std::make_shared<Node<int>>(1);

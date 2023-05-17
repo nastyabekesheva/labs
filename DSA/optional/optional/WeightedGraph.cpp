@@ -187,6 +187,7 @@ private:
 public:
     WeightedGraph(): _vertices({}), _edges({}), _adj_matrix({{}}), _num_edges(0) {}
     WeightedGraph(std::vector<std::shared_ptr<Node<T>>> vertecies, std::vector<std::shared_ptr<Edge<T>>> edges = {});
+    WeightedGraph(std::vector<std::shared_ptr<Node<T>>> vertecies, std::vector<std::vector<int>> matrix = {});
     ~WeightedGraph() = default;
     WeightedGraph(const WeightedGraph & wg);
     WeightedGraph(WeightedGraph && wg);
@@ -203,7 +204,7 @@ public:
     std::vector<std::shared_ptr<Node<T>>> DFS(std::shared_ptr<Node<T>> start);
     std::vector<std::shared_ptr<Node<T>>> BFS(std::shared_ptr<Node<T>> start);
     std::set<std::shared_ptr<Edge<T>>> kruskal();
-    std::set<std::shared_ptr<Edge<T>>> prim();
+    void prim();
     
 };
 
@@ -276,6 +277,28 @@ WeightedGraph<T>::WeightedGraph(std::vector<std::shared_ptr<Node<T>>> vertecies,
     _num_edges = edges.size();
     _num_vertices = vertecies.size();
     make_matrix();
+    make_lists();
+    
+}
+
+template<typename T>
+WeightedGraph<T>::WeightedGraph(std::vector<std::shared_ptr<Node<T>>> vertecies, std::vector<std::vector<int>> matrix)
+{
+    _vertices = vertecies;
+    _num_vertices = vertecies.size();
+    _adj_matrix = matrix;
+    
+    for (int i = 0; i < matrix.size(); i++)
+    {
+        for (int j = 0; j < matrix[i].size(); j++)
+        {
+            if (matrix[i][j] != 0)
+            {
+                _edges.push_back(std::make_shared<Edge<int>>(_vertices[i], _vertices[j], matrix[i][j]));
+            }
+        }
+    }
+    
     make_lists();
     
 }
@@ -602,53 +625,14 @@ std::set<std::shared_ptr<Edge<T>>> WeightedGraph<T>::kruskal()
     return forest;
 }
 
-//template<typename T>
-//std::set<std::shared_ptr<Edge<T>>> WeightedGraph<T>::prim()
-//{
-//    std::set<std::shared_ptr<Node<T>>> visited;
-////    std::vector<std::shared_ptr<Node<T>>> visited;
-//    visited.insert(_vertices[0]);
-//    std::set<std::shared_ptr<Edge<T>>> forest;
-//
-//    while (visited.size() != _vertices.size())
-//    {
-//        int min = INF;
-//        std::shared_ptr<Edge<T>> edge;
-//        std::shared_ptr<Node<T>> new_node;
-//        for (std::shared_ptr<Node<T>> node : _vertices)
-//        {
-//            if (std::find(visited.begin(), visited.end(), node) != visited.end())
-//            {
-//                for (std::shared_ptr<Node<T>> adj_node : _adj_lists[std::distance(_vertices.begin(), std::find(_vertices.begin(), _vertices.end(), node))])
-//                {
-//                    if ((std::find(_vertices.begin(), _vertices.end(), adj_node) != _vertices.end()) && !(std::find(visited.begin(), visited.end(), adj_node) != visited.end()))
-//                    {
-//                        edge = find_edge(node, adj_node);
-//                        if (min > edge->_weight)
-//                        {
-//                            min = edge->_weight;
-//                            new_node = adj_node;
-//                        }
-//                    }
-//                }
-//            }
-//        }
-//        visited.insert(new_node);
-//        forest.insert(edge);
-//        std::cout << *edge << std::endl;
-//    }
-//    return forest;
-//}
-
-
 template<typename T>
-std::set<std::shared_ptr<Edge<T>>> WeightedGraph<T>::prim()
+void WeightedGraph<T>::prim()
 {
     std::map<std::shared_ptr<Node<T>>, int> key;
     std::map<std::shared_ptr<Node<T>>, std::shared_ptr<Node<T>>> parent;
     std::map<std::shared_ptr<Node<T>>, bool> in_tree;
-    std::set<std::shared_ptr<Edge<T>>> tree;
-    std::priority_queue<std::pair<std::shared_ptr<Node<T>>, int>, std::vector <std::pair<std::shared_ptr<Node<T>>, int>>, std::greater<std::pair<std::shared_ptr<Node<T>>, int>>> pq;
+//    std::set<std::shared_ptr<Edge<T>>> tree;
+    std::priority_queue<std::pair<int, std::shared_ptr<Node<T>>>, std::vector <std::pair<int, std::shared_ptr<Node<T>>>>, std::greater<std::pair<int, std::shared_ptr<Node<T>>>>> pq;
 
     for (std::shared_ptr<Node<T>> node : _vertices)
     {
@@ -657,13 +641,13 @@ std::set<std::shared_ptr<Edge<T>>> WeightedGraph<T>::prim()
         key[node] =  INF;
     }
     
-    pq.push(std::make_pair(_vertices[0], 0));
+    pq.push(std::make_pair(0, _vertices[0]));
     
     key[_vertices[0]] = 0;
 
     while (!pq.empty())
     {
-        std::shared_ptr<Node<T>> node =  pq.top().first;
+        std::shared_ptr<Node<T>> node =  pq.top().second;
         pq.pop();
         
         if (in_tree[node] == true)
@@ -677,12 +661,14 @@ std::set<std::shared_ptr<Edge<T>>> WeightedGraph<T>::prim()
             if (in_tree[adj_node] == false && key[adj_node] > edge->_weight)
             {
                 key[adj_node] = edge->_weight;
-                pq.push(std::make_pair(adj_node, key[adj_node]));
+                pq.push(std::make_pair(key[adj_node], adj_node));
                 parent[adj_node] = node;
                 std::cout << *edge << std::endl;
             }
         }
+    }
+    std::cout << parent[0];
 
-    return tree;
+//    return tree;
 }
 
