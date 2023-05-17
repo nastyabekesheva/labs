@@ -289,6 +289,8 @@ func expMod(x: Int, power: Int, n: Int) -> Int{
         
     }
     
+//    expMod(x: x / GCD(a: x, b: n).gcd, power: power, n: n)
+    
     return 0
 }
 
@@ -341,7 +343,7 @@ func expMod(x: Int, power: Int, n: Int) -> Int{
 //print("\nEuler's Totient Fuction\n")
 //Euler(n: 10816)
 print("\nBig integer modulo\n")
-expMod(x: 2, power: 433, n: 777)
+expMod(x: 2, power: 12, n: 36)
 //print("\nChinese Remainder Theorem\n")
 //print(CRT(n: [45,23], remainder: [10,21]))
 //print(GCD(a: 25, b: 111))
